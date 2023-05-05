@@ -1,0 +1,117 @@
+import Vue from "vue"
+import util from "./util"
+
+export default {
+    // 资产借用
+    'assets-borrow': {}, 
+    // 资产类别
+    'assets-class': {}, 
+    // 资产盘点
+    'assets-inventory': {}, 
+    // 资产盘点表
+    'assets-inventory-sheet': {}, 
+    // 资产维护
+    'assets-maintain': {}, 
+    // 资产申购
+    'assets-purchase-requisition': {}, 
+    // 资产报废
+    'assets-scrap': {}, 
+    // 资产入库
+    'assets-storage': {}, 
+    // 资产转移
+    'assets-transfer': {}, 
+    // 品牌
+    'brand': {}, 
+    // 部门管理
+    'department': {
+            "orderNumber": {
+                name: "序号",
+                width: '130px',
+                value(line, index) {
+                    line.orderNumber = Number.parseInt(index) + 1
+                }
+            },
+            "id": {
+                name: "部门编号",
+                width: '300px'
+            },
+            "name": {
+                name: "部门名称",
+                width: '200px'
+            },
+            "createTime": {
+                name: "创建日期",
+                width: '300px',
+                value(line) {
+                    line.createTime = util.DateFormat(line.createTime)
+                }
+            },
+            "profile": {
+                name: "部门简介",
+                width: '400px'
+            },
+    },
+    // 设备用途
+    'equipment-use': {}, 
+    // 取得方式
+    'gaining-method': {}, 
+    // 个人信息
+    'personal-info': {}, 
+    // 人员管理
+    'personnel': {
+            "orderNumber": {
+                name: "序号",
+                width: '130px',
+                value(line, index) {
+                    line.orderNumber = Number.parseInt(index) + 1
+                }
+            },
+            "name": {
+                name: "姓名",
+                width: '300px'
+            },
+            "id": {
+                name: "工号",
+                width: '200px'
+            },
+            "gender": {
+                name: "性别",
+                width: '200px'
+            },
+            "birthDate": {
+                name: "出生日期",
+                width: '300px',
+                value(line) {
+                    line.birthDate = util.DateFormat(line.birthDate)
+                }
+            },
+            "departmentId": {
+                name: "所属部门",
+                width: '300px',
+                value(line) {
+                    Vue.prototype.$http
+                        .get(`/department/id/${line.departmentId}`)
+                        .then((result) => {
+                            line.departmentId = result.data.data.name
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                }
+            },
+            "category": {
+                name: "人员类别",
+                width: '400px',
+                value(line) {
+                    
+                }
+            },
+    },
+    // 报废方式
+    'scrap-mode': {}, 
+    // 存放地点
+    'storage-place': {}, 
+    // 供应商
+    'supplier': {}, 
+    // 用户登录信息
+    'user-info': {}
+}
