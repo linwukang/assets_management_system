@@ -8,7 +8,7 @@
             <SideMenu class="side-menu" :menu-list="menu_list" :style="{width: '200px'}"></SideMenu>
         </div>
         <div class="right">
-            <LocationNav class="location-nav" :path="[{name: '首页', to: '#'}]"></LocationNav>
+            <LocationNav class="location-nav"></LocationNav>
             <div class="content">
                 <router-view :key="$route.fullPath"></router-view>
             </div>
@@ -20,6 +20,7 @@
 <script>
 import SideMenu from '../components/SideMenu.vue'
 import LocationNav from '../components/LocationNav.vue'
+import { EventBus } from '../main';
 export default {
     data() {
         let basePath = "/" + this.$route.params.identity + "/home"
@@ -131,12 +132,16 @@ export default {
                     },
                 ],
                 'asset-leader': [],
-            }
+            },
+            homePath: `/${this.$route.params.identity}/home`
         }
     },
     mounted() {
         console.log(this.$route.params.identity)
         this.menu_list = this.menu[this.$route.params.identity]
+    },
+    updated() {
+
     },
     computed: {},
     props: ["menuList"],

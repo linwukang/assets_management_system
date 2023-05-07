@@ -1,10 +1,7 @@
 import FormDialog from "../components/FormDialog.vue"
 import util from "../util"
-import FormContent from "./FormContent"
-import Vue from "vue"
-import ElementUI from "element-ui" 
+import FormStruct from "./FormStruct"
 import router from "../router"
-import { EventBus } from "../main"
 import Service from "../Service"
 
 export default {
@@ -17,7 +14,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改资产类别",
-                    content: FormContent["assets-class"],
+                    content: FormStruct["assets-class"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(
@@ -143,7 +140,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改报废方式",
-                    content: FormContent["brand"],
+                    content: FormStruct["brand"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(
@@ -191,7 +188,7 @@ export default {
                 click: function () {
                     util.createComponent(FormDialog, {
                         title: "修改部门",
-                        content: FormContent['department'],
+                        content: FormStruct['department'],
                         dataLine: line,
                         onSave: (data, ok) => { 
                             util.http.put(
@@ -213,7 +210,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改设备用途",
-                    content: FormContent["equipment-use"],
+                    content: FormStruct["equipment-use"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         // util.http.put(
@@ -267,7 +264,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改报废方式",
-                    content: FormContent["gaining-method"],
+                    content: FormStruct["gaining-method"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(
@@ -332,7 +329,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改报废方式",
-                    content: FormContent["scrap-mode"],
+                    content: FormStruct["scrap-mode"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(
@@ -380,7 +377,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改存放地点",
-                    content: FormContent["storage-place"],
+                    content: FormStruct["storage-place"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(
@@ -428,7 +425,7 @@ export default {
                 util.createComponent(FormDialog, {
                     visible: true,
                     title: "修改供应商",
-                    content: FormContent["supplier"],
+                    content: FormStruct["supplier"],
                     dataLine: line,
                     onSave: (data, ok) => { 
                         util.http.put(

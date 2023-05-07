@@ -237,7 +237,7 @@ export default {
 			name: "申购建议",
 			width: '300px',
 		},
-		"purchaseDate": {
+		"purchaseRequisitionDate": {
 			name: "申购日期",
 			width: '300px',
 			value(dataSource, index) {
@@ -315,7 +315,7 @@ export default {
 			name: "取得方式",
 			width: '200px'
 		},
-		"storageTime": {
+		"storageDate": {
 			name: "入库日期",
 			width: '300px',
 			value(dataSource, index) {

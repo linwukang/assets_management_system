@@ -53,9 +53,9 @@ public class AssetsStorage implements Serializable {
     @TableField("gaining_method_id")
     private Integer gainingMethodId;
 
-    @ApiModelProperty("入库时间")
-    @TableField("storage_time")
-    private Date storageTime;
+    @ApiModelProperty("入库日期")
+    @TableField("storage_date")
+    private Date storageDate;
 
     @ApiModelProperty("存放地点id")
     @TableField("storage_place_id")

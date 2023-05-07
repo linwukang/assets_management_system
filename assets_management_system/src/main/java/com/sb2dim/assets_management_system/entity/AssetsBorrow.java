@@ -72,4 +72,8 @@ public class AssetsBorrow implements Serializable {
     @ApiModelProperty("归还状态")
     @TableField("return_state")
     private String returnState;
+
+    @ApiModelProperty("备注")
+    @TableField("remark")
+    private String remark;
 }

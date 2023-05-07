@@ -25,9 +25,17 @@ public class AssetsScrap implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("资产id")
+    @ApiModelProperty("id")
     @TableId(value = "asset_id", type = IdType.ASSIGN_ID)
+    private Integer id;
+
+    @ApiModelProperty("资产id")
+    @TableField(value = "asset_id")
     private Integer assetId;
+
+    @ApiModelProperty("报废单号")
+    @TableField("code")
+    private String code;
 
     @ApiModelProperty("申请人id")
     @TableField("proposer_id")

@@ -51,6 +51,7 @@ export default {
     },
     methods: {
         updateDataList(conditions) {
+            EventBus.$emit("loading", true)
             conditions = conditions ? conditions : []
             Service.joinPage(
                 Data[this.$route.params.view].url, 
@@ -58,8 +59,13 @@ export default {
                 conditions,
                 this.currentPage,
                 15,
-                (data) => { this.dataSource = data }, 
-                (okay, message) => { okay ? null : this.tip(message, "error") }
+                (data) => { 
+                    this.dataSource = data 
+                }, 
+                (okay, message) => { 
+                    EventBus.$emit("loading", false)
+                    okay ? null : this.tip(message, "error") 
+                }
             )
             Service.conditionCount(
                 Data[this.$route.params.view].url,
@@ -94,4 +100,7 @@ export default {
 </script>
 
 <style lang="less">
+.functional-view {
+    
+}
 </style>

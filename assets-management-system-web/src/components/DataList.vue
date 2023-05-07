@@ -11,13 +11,13 @@
             </td>
             <td class="operating" v-if="operating">操作</td>
         </tr>
-        <tr v-for="line, i in data_source" >
+        <tr v-for="line, i in dataContent" >
             <td 
                 v-for="(col, field_name) of display" 
                 :key="field_name"
                 v-if="col.name">
                 <span v-if="line[field_name]">
-                    <router-link :to="col.to(data_source, i)" v-if="col.to" class="router-link">
+                    <router-link :to="col.to(dataContent, i)" v-if="col.to" class="router-link">
                         {{ line[field_name] }}
                     </router-link>
                     <span v-else>
@@ -32,39 +32,44 @@
                     :vertical="vertical" />
             </td>
         </tr>
-        <div v-if="data_source.length == 0">没有数据</div>
+        <div v-if="dataContent.length == 0 && !loading">没有数据</div>
     </table>
 </div>
 </template>
 
 <script>
 import util from "../util"
+import { EventBus } from "../main";
 import DataOperating from "./DataOperating.vue"
+import { Loading } from 'element-ui'
+
 export default {
     data() {
         return {
             edit_data: this.onEdit ? this.onEdit : function () {},
             delete_data: this.onDelete ? this.onDelete : function () {},
-            data_source: [],
-            widthSum: 0
+            dataContent: [],
+            widthSum: 0,
+            loading: false,
+            loadingInstance: null
         }
     },
     methods: {
         updateDataSource() {
-            this.data_source = []
+            this.dataContent = []
             this.dataList.forEach((line, index) => {
                 let cloneLine = {...line}
 
-                this.data_source.push(cloneLine)
+                this.dataContent.push(cloneLine)
 
                 for (let field_name in this.display) {
                     if (this.display[field_name] && this.display[field_name].value) {
-                        this.data_source[index][field_name] = this.display[field_name].value(this.data_source, index)
+                        this.dataContent[index][field_name] = this.display[field_name].value(this.dataContent, index)
                     }
                 }
                 
             })
-            console.log(this.data_source);
+            console.log(this.dataContent);
         }
     },
     mounted() {
@@ -72,6 +77,13 @@ export default {
         for (let field_name in this.display) {
             this.widthSum += this.display[field_name].width
         }
+        EventBus.$on("loading", (loading) => {
+            // console.log("loading event", loading)
+            this.loading = loading
+        })
+    },
+    beforeUpdate() {
+        EventBus.$emit("loading", false)
     },
     computed: {},
     watch: {
@@ -81,6 +93,23 @@ export default {
             handler(oldValue, newValue) {
                 this.updateDataSource()
             }
+        },
+        loading: {
+            deep: true,
+            immediate: true,
+            handler(oldValue, newValue) {
+                // console.log("watch loading", this.loading)
+                if (this.loading) {
+                    this.loadingInstance = Loading.service({
+                        target: ".home>.main>.right",
+                        fullscreen: true,
+                    })
+                }
+                else {
+                    if (this.loadingInstance !== null)
+                        this.loadingInstance.close()
+                }
+        }
         }
     },
     props: [

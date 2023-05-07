@@ -7,6 +7,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsBorrow",
 		url: 'assets-borrow',
+		name: '资产借还',
         struct: {
 			"id": {},
             "code": {},
@@ -26,6 +27,9 @@ let Data = {
                 }
             },
             "code": {
+				to(dataSource, index) {
+					return `assets-borrow/details/${dataSource[index].id}`
+				},
                 name: "借用单号",
                 width: 400,
             },
@@ -81,6 +85,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsClass",
 		url: 'assets-class',
+		name: '资产类别',
 		struct: {
 			"id": {},
 			"code": {},
@@ -128,6 +133,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsStorage",
 		url: 'assets-storage',
+		name: '资产信息维护',
 		struct: {
 			"id": {},
 			"code": {},
@@ -136,7 +142,7 @@ let Data = {
 			"supplierId": {},
 			"brandId": {},
 			"gainingMethodId": {},
-			"storageTime": {},
+			"storageDate": {},
 			"storagePlaceId": {},
 			"assetPhotograph": {},
 			"state": {}
@@ -173,11 +179,11 @@ let Data = {
 				name: "取得方式",
 				width: 200,
 			},
-			"storageTime": {
+			"storageDate": {
 				name: "入库日期",
 				width: 200,
 				value(dataSource, index) {
-					return util.DateFormat(dataSource[index].storageTime)
+					return util.DateFormat(dataSource[index].storageDate)
 				}
 			},
 			"StoragePlace(storagePlaceId).name": {
@@ -195,6 +201,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsInventory",
 		url: 'assets-inventory',
+		name: '资产盘点',
 		struct: {
 			"id": {},
 			"code": {},
@@ -283,6 +290,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsMaintain",
 		url: 'assets-maintain',
+		name: '资产维修',
 		struct: {
 			"id": {},
 			"code": {},
@@ -306,6 +314,9 @@ let Data = {
 				}
 			},
 			"code": {
+				to(dataSource, index) {
+					return `assets-maintain/details/${dataSource[index].id}`
+				},
 				name: "维修单号",
 				width: 350
 			},
@@ -358,6 +369,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsPurchaseRequisition",
 		url: 'assets-purchase-requisition',
+		name: '资产申购',
 		struct: {
 			"id": {},
 			"code": {},
@@ -438,6 +450,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsScrap",
 		url: 'assets-scrap',
+		name: '资产报废',
 		struct: {
 			"id": {},
 			"assetId": {},
@@ -455,6 +468,9 @@ let Data = {
 				}
 			},
 			"code": {
+				to(dataSource, index) {
+					return `assets-scrap/details/${dataSource[index].id}`
+				},
 				name: "报废单号",
 				width: 300
 			},
@@ -468,7 +484,7 @@ let Data = {
 			},
 			"scrapDate": {
 				name: "报废日期",
-				width: 2500,
+				width: 250,
 				value(dataSource, index) {
 					return util.DateFormat(dataSource[index].scrapDate)
 				}
@@ -497,6 +513,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsStorage",
 		url: 'assets-storage',
+		name: '资产入库',
 		struct: {
 			"id": {},
 			"code": {},
@@ -505,7 +522,7 @@ let Data = {
 			"supplierId": {},
 			"brandId": {},
 			"gainingMethodId": {},
-			"storageTime": {},
+			"storageDate": {},
 			"storagePlaceId": {},
 			"assetPhotograph": {},
 			"state": {}
@@ -542,11 +559,11 @@ let Data = {
 				name: "取得方式",
 				width: 200,
 			},
-			"storageTime": {
+			"storageDate": {
 				name: "入库日期",
 				width: 200,
 				value(dataSource, index) {
-					return util.DateFormat(dataSource[index].storageTime)
+					return util.DateFormat(dataSource[index].storageDate)
 				}
 			},
 			"StoragePlace(storagePlaceId).name": {
@@ -564,6 +581,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "AssetsTransfer",
 		url: 'assets-transfer',
+		name: '资产转移',
 		struct: {
 			"id": {},
 			"code": {},
@@ -581,6 +599,9 @@ let Data = {
 				}
 			},
 			"code": {
+				to(dataSource, index) {
+					return `assets-transfer/details/${dataSource[index].id}`
+				},
 				name: "转移单号",
 				width: 300
 			},
@@ -634,6 +655,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "Brand",
 		url: 'brand',
+		name: '品牌',
 		struct: {
 			"id": {},
 			"name": {},
@@ -680,6 +702,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "Department",
 		url: 'department',
+		name: '部门管理',
 		struct: {
 			"id": {},
 			"code": {},
@@ -721,6 +744,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "EquipmentUse",
 		url: 'equipment-use',
+		name: '设备用途',
 		struct: {
 			"id": {},
 			"code": {},
@@ -772,6 +796,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "GainingMethod",
 		url: 'gaining-method',
+		name: '取得方式',
 		struct: {
 			"id": {},
 			"code": {},
@@ -818,6 +843,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "PersonalInfo",
 		url: 'personal-info',
+		name: '个人信息',
 		struct: {
 			"id": {},
 			"account": {},
@@ -852,6 +878,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "Personnel",
 		url: 'personnel',
+		name: '人员管理',
 		struct: {
 			"id": {},
 			"orderNumber": {},
@@ -904,6 +931,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "ScrapMode",
 		url: 'scrap-mode',
+		name: '报废方式',
 		struct: {
 			"id": {},
 			"code": {},
@@ -947,6 +975,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "StoragePlace",
 		url: 'storage-place',
+		name: '存放地点',
 		struct: {
 			"id": {},
 			"name": {},
@@ -993,6 +1022,7 @@ let Data = {
 		idFieldName: "id",
 		entityClassName: "Supplier",
 		url: 'supplier',
+		name: '供应商',
 		struct: {
 			"id": {},
 			"name": {},
@@ -1011,6 +1041,9 @@ let Data = {
 				}
 			},
 			"name": {
+				to(dataSource, index) {
+					return `supplier/details/${dataSource[index].id}`
+				},
 				name: "供应商名称",
 				width: 350
 			},
@@ -1049,6 +1082,7 @@ let Data = {
 		idFieldName: "username",
 		entityClassName: "UserInfo",
 		url: 'user-info',
+		name: '用户登录信息',
 		struct: {
 			"username": {},
 			"password": {},

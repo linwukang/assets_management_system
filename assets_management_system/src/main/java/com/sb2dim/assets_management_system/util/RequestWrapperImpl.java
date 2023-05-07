@@ -83,12 +83,12 @@ public class RequestWrapperImpl implements RequestWrapper {
                     .replace("\\\\_", "_");
             return Pattern.compile("^" + regex + "$").matcher(str).find();
         };
-//        System.out.println("entityClassName: " + entityClassName);
-//        System.out.println("id: " + id);
-//        System.out.println("joinColumn: " + joinColumn);
-//        System.out.println("joinColumnValue: " + joinColumnValue);
-//        System.out.println("values.get(1): " + values.get(1).getClass().getName() + ":" + values.get(1));
-//        System.out.println("joinColumnValue: " + joinColumnValue.getClass().getName() + ":" + joinColumnValue);
+        System.out.println("entityClassName: " + entityClassName);
+        System.out.println("id: " + id);
+        System.out.println("joinColumn: " + joinColumn);
+        System.out.println("joinColumnValue: " + joinColumnValue);
+        System.out.println("values.get(1): " + values.get(1).getClass().getName() + ":" + values.get(1));
+        System.out.println("joinColumnValue: " + joinColumnValue.getClass().getName() + ":" + joinColumnValue);
         return switch (operator) {
             case "eq" -> compare(joinColumnValue, values.get(1)) == 0;
             case "ne" -> compare(joinColumnValue, values.get(1)) != 0;

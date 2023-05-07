@@ -17,14 +17,14 @@ import util from '../util';
 import DataStruct from "../data/DataStruct"
 import DataOperating from '../data/DataOperating'
 import FormView from "./FormView.vue"
-import FormContent from '../data/FormContent'
+import FormStruct from '../data/FormStruct'
 import Service from '../Service';
 import Data from '../data/Data';
 export default {
     data() {
         return {
             title: this.$route.query.title,
-            content: FormContent[this.$route.params.view],
+            content: FormStruct[this.$route.params.view],
             onSave: (dataLine, ok) => {
                 Service.save(Data[this.$route.params.view].url, dataLine, ok)
             },

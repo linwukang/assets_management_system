@@ -71,7 +71,7 @@
 
 <script>
 import Data from '../data/Data'
-import FormContent from '../data/FormContent'
+import FormStruct from '../data/FormStruct'
 import { EventBus } from '../main'
 import Service from '../Service'
 export default {
@@ -168,7 +168,7 @@ export default {
     },
     computed: {},
     mounted() {
-        this.formContent = FormContent[this.$route.params.view]
+        this.formContent = FormStruct[this.$route.params.view]
         this.fieldNames = []
         for (let i in this.formContent) {
             for (let j in this.formContent[i]) {

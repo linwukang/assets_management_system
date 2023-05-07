@@ -105,7 +105,7 @@ export default {
             },
             {
                 label: '入库时间',
-                fieldName: 'storageTime',
+                fieldName: 'storageDate',
                 required: true,
                 date: true
             },
@@ -428,7 +428,7 @@ export default {
             },
             {
                 label: '入库时间',
-                fieldName: 'storageTime',
+                fieldName: 'storageDate',
                 required: true,
                 date: true
             },

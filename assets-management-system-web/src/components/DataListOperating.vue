@@ -51,12 +51,15 @@
         </span>
         <el-button 
             v-if="content.left.length != 0 && content.left[0].length != 0"
-            @click="query">
+            @click="query"
+            type="primary">
             查询
         </el-button>
     </el-form>
     <div class="right">
-        <el-button v-for="right, index in content.right" @click="right.click()">
+        <el-button 
+            v-for="right, index in content.right" 
+            @click="right.click()">
             {{ right.text }}
         </el-button>
     </div>
@@ -272,6 +275,7 @@ export default {
 
 <style lang="less">
 .data-list-operating {
+    padding: 20px 0;
     .left {
         float: left;
     }

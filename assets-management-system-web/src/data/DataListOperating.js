@@ -142,7 +142,7 @@ export default {
             { type: 'input', fieldName: 'Personnel(proposerId).name,Personnel(proposerId).code', label: '借用人姓名/工号', width: 150 },
             {
                 type: 'date',
-                fieldName: 'purchaseDate',
+                fieldName: 'purchaseRequisitionDate',
                 label: '申请日期',
                 startLabel: '开始日期',
                 endLabel: '结束日期',
@@ -170,7 +170,7 @@ export default {
             },
             {
                 type: 'date',
-                fieldName: 'purchaseDate',
+                fieldName: 'purchaseRequisitionDate',
                 label: '报废日期',
                 startLabel: '开始日期',
                 endLabel: '结束日期',

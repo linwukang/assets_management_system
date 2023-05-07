@@ -317,7 +317,7 @@ export default {
 			name: "申购建议",
 			width: '300px',
 		},
-		"purchaseDate": {
+		"purchaseRequisitionDate": {
 			name: "申购日期",
 			width: '300px',
 			value(dataSource, index) {
@@ -427,11 +427,11 @@ export default {
 				)
 			}
 		},
-		"storageTime": {
+		"storageDate": {
 			name: "入库日期",
 			width: '300px',
 			value(dataSource, index) {
-				dataSource[index].storageTime = util.DateFormat(dataSource[index].storageTime)
+				dataSource[index].storageDate = util.DateFormat(dataSource[index].storageDate)
 			}
 		},
 		"storagePlaceId": {
