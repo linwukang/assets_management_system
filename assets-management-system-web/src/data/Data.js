@@ -206,6 +206,7 @@ let Data = {
 			"id": {},
 			"code": {},
 			"name": {},
+			"description": {},
 			"state": {},
 			"endDate": {},
 			"startDate": {},
@@ -220,6 +221,9 @@ let Data = {
 				}
 			},
 			"code": {
+				to(dataSource, index) {
+					return `assets-inventory/result/${dataSource[index].id}`
+				},
 				name: "盘点单编号",
 				width: 300
 			},
@@ -278,9 +282,10 @@ let Data = {
 		struct: {
 			"id": {},
 			"assetsInventoryId": {},
-			"assetsId": {},
+			"assetId": {},
 			"result": {},
 			"remark": {},
+			"isInventoried": {},
 		},
 		display: {
 		}
@@ -432,14 +437,14 @@ let Data = {
 				name: "申请状态",
 				width: 150,
 				value(dataSource, index) {
-					if (dataSource[index].notApprovingReasons === 'unread')
+					if (dataSource[index].applicationStatus === 'unread')
 						return '未批阅'
-					if (dataSource[index].notApprovingReasons === 'not_approved')
+					if (dataSource[index].applicationStatus === 'not_approved')
 						return '审批不通过'
-					if (dataSource[index].notApprovingReasons === 'approved')
+					if (dataSource[index].applicationStatus === 'approved')
 						return '审批通过'
 					else
-						return dataSource[index].notApprovingReasons
+						return dataSource[index].applicationStatus
 
 				}
 			}
@@ -719,7 +724,7 @@ let Data = {
 				}
 			},
 			"code": {
-				name: "部门编号",
+				name: "部门编码",
 				width: 350
 			},
 			"name": {

@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -38,14 +39,15 @@ public class Brand implements Serializable {
     @ApiModelProperty("品牌名称")
     @TableField("name")
     @NotBlank(message = "品牌名称必填，请重新输入。")
-    // 汉字，可输入长度大于等于3个字小于等于20个字
-    @Pattern(regexp = "^[\u4e00-\u9fa5]{3,20}$",
+    @Size(min = 0, max = 200,
             message = "品牌名称输入有误，请重新输入。")
     private String name;
 
     @ApiModelProperty("品牌说明")
     @TableField("description")
     @NotBlank(message = "品牌说明必填，请重新输入。")
+    @Size(min = 0, max = 200,                        // XX 填最大字数
+            message = "品牌说明输入有误，请重新输入。")
     private String description;
 
     @ApiModelProperty("是否已启用")

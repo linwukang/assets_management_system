@@ -61,7 +61,8 @@ public class Department implements Serializable {
 
     @ApiModelProperty("部门简介")
     @TableField("profile")
-    @Size(max = 500)
+    @Size(min = 0, max = 500,
+            message = "部门简介输入有误，请重新输入。")
     private String profile;
 
     @TableField("create_time")

@@ -14,7 +14,6 @@
 import DataList from '../components/DataList.vue'
 import FormDialog from '../components/FormDialog.vue'
 import util from '../util';
-import DataStruct from "../data/DataStruct"
 import DataOperating from '../data/DataOperating'
 import FormView from "./FormView.vue"
 import FormStruct from '../data/FormStruct'

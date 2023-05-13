@@ -10,10 +10,7 @@ import java.util.Date;
 import com.sb2dim.assets_management_system.entity.auto_fill.annotation.TimestampCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.Data;
 
@@ -44,20 +41,22 @@ public class AssetsMaintain implements Serializable {
     @ApiModelProperty("资产id")
     @TableField("asset_id")
     // 不能为空（必填）
-    @NotBlank(message = "资产名称必填，请重新输入。")
+    @NotNull(message = "资产名称必填，请重新输入。")
+    @Pattern(regexp = "^[0-9a-zA-Z\u4e00-\u9fa5]{2,30}$",
+            message = "资产名称输入有误，请重新输入。")
     private Integer assetId;
 
     @ApiModelProperty("报修日期")
     @TableField("report_maintain_date")
     @Past(message = "报修日期输入有误，请重新输入。")
     // 不能为空（必填）
-    @NotBlank(message = "报修日期必填，请重新输入。")
+    @NotNull(message = "报修日期必填，请重新输入。")
     private Date reportMaintainDate;
 
     @ApiModelProperty("报修人id")
     @TableField("report_maintain_personnel_id")
     // 不能为空（必填）
-    @NotBlank(message = "报修人必填，请重新输入。")
+    @NotNull(message = "报修人必填，请重新输入。")
     private Integer reportMaintainPersonnelId;
 
     @ApiModelProperty("报修原因")
@@ -91,7 +90,7 @@ public class AssetsMaintain implements Serializable {
     @TableField("fault_description")
     // 不能为空（必填）
     @NotBlank(message = "故障说明必填，请重新输入。")
-    // 字符长度限制：不超过200个字
-    @Size(max = 200)
+    @Size(min = 0, max = 200,
+            message = "XXXX输入有误，请重新输入。")
     private String faultDescription;
 }

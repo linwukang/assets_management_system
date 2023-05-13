@@ -29,7 +29,36 @@ export default {
     methods: {
         login() {
             console.log("login");
-            Service.login(this.username, this.password, this.tip)
+            Service.login(
+                this.username, 
+                this.password, 
+                (okay, message) => {
+                    if (okay) {
+                        this.tip('登陆成功', 'success')
+                        Service.getIdentity(
+                            (identity) => {
+                                switch (identity) {
+                                    case 'assets_leader':
+                                        this.$router.push('/assets-leader/home')
+                                        break
+                                    case 'assets_manager':
+                                        this.$router.push('/assets-manager/home')
+                                        break
+                                    case 'system_administrator':
+                                        this.$router.push('/system-administrator/home')
+                                        break
+                                    default:
+                                        break
+                                }
+                            }, 
+                            (okay, message) => {
+                                console.log(okay, message);
+                            }
+                        )
+                    } else {
+                        this.tip(message, 'error')
+                    }
+                })
         },
         tip(message, type) {
             this.$message({

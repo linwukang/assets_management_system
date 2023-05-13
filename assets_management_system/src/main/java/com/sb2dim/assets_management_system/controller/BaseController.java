@@ -1,5 +1,6 @@
 package com.sb2dim.assets_management_system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -20,16 +21,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BaseController<E extends Serializable> {
     @Autowired
-    private IService<E> service;
+    protected IService<E> service;
 
     @Autowired
-    private UniqueHandler uniqueHandler;
+    protected UniqueHandler uniqueHandler;
 
     /**
      * 获取实体类数据表中所有的数据
@@ -44,6 +46,46 @@ public class BaseController<E extends Serializable> {
         return new ResponseResult(
                 entities,
                 entities != null ? Code.QUERY_ALL_OK : Code.QUERY_ALL_ERR,
+                entities != null ? null : "服务器繁忙，请稍后重试！");
+    }
+
+    /**
+     * 通过 id 列表获取数据
+     * @return id 列表对应的数据列表
+     */
+    @PostMapping("/id-list")
+    public ResponseResult listByIdList(@RequestBody Map<String, Object> requestBody) {
+        List<Serializable> idList = (List<Serializable>) requestBody.get("idList");
+        System.out.println(idList);
+        List<E> entities = service.listByIds(idList);
+
+        return new ResponseResult(
+                entities,
+                entities != null ? Code.QUERY_OK : Code.QUERY_ERR,
+                entities != null ? null : "服务器繁忙，请稍后重试！");
+    }
+
+    @PostMapping("/join/id-list")
+    public ResponseResult joinListByIdList(@RequestBody Map<String, Object> requestBody) {
+        List<String> dataStruct = (List<String>) requestBody.get("dataStruct");
+        List<Serializable> idList = (List<Serializable>) requestBody.get("idList");
+        System.out.println(idList);
+        List<E> rawEntities = service.listByIds(idList);
+        List<Map<String, Object>> entities = null;
+        if (rawEntities != null) {
+            entities = rawEntities
+                    .stream()
+                    .map((e) -> {
+                        Map<String, Object> entityMap = new HashMap<>();
+                        BeanMap.create(e).forEach((k, v) -> entityMap.put((String) k, v));
+                        dataStruct.forEach(ds -> entityMap.put(ds, ServiceUtil.getJoinColumnValue(e, ds)));
+                        return entityMap;
+                    })
+                    .toList();
+        }
+        return new ResponseResult(
+                entities,
+                entities != null ? Code.QUERY_OK : Code.QUERY_ERR,
                 entities != null ? null : "服务器繁忙，请稍后重试！");
     }
 
@@ -83,6 +125,7 @@ public class BaseController<E extends Serializable> {
                 entities != null ? null : "服务器繁忙，请稍后重试！");
     }
 
+
     /**
      * 通过 requestBody 中的 dataStruct 查询指定 id 符合条件的数据
      * @param requestBody 请求体
@@ -93,7 +136,6 @@ public class BaseController<E extends Serializable> {
         List<String> dataStruct = (List<String>) requestBody.get("dataStruct");
         E rawEntity = service.getById(id);
         Map<String, Object> entity = null;
-
         if (rawEntity != null) {
             entity = new HashMap<>();
             BeanMap rawEntityMap = BeanMap.create(rawEntity);
@@ -207,6 +249,38 @@ public class BaseController<E extends Serializable> {
         } else {
             try {
                 boolean succeeded = service.save(entity);
+
+                System.out.println(entity);
+
+                // 保存成功
+                return new ResponseResult(entity, succeeded ? Code.CREATE_OK : Code.CREATE_ERR, null);
+            }
+            catch (DuplicateKeyException e) {
+                // 保存失败
+                return new ResponseResult(null, Code.CREATE_ERR, "服务器繁忙，请稍后重试！");
+            }
+        }
+    }
+
+    @PostMapping("/list")
+    public ResponseResult createMultiple(@Validated @RequestBody List<E> entities, BindingResult bindingResult) {
+        String message = null;
+        entities.forEach(AutoFill::fill);
+
+        if (bindingResult.hasErrors()) {
+            message = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            // 保存失败
+            return new ResponseResult(false, Code.CREATE_ERR, message);
+        }
+
+        List<String> uniqueMessages = new ArrayList<>();
+        entities.forEach((entity) -> uniqueMessages.addAll(uniqueHandler.createValid(entity)));
+
+        if (uniqueMessages.size() > 0) {
+            return new ResponseResult(false, Code.CREATE_ERR, uniqueMessages.get(0));
+        } else {
+            try {
+                boolean succeeded = service.saveBatch(entities);
                 // 保存成功
                 return new ResponseResult(succeeded, succeeded ? Code.CREATE_OK : Code.CREATE_ERR, null);
             }
@@ -227,6 +301,33 @@ public class BaseController<E extends Serializable> {
         }
         try {
             boolean succeeded = service.saveOrUpdate(entity);
+            return new ResponseResult(
+                    succeeded,
+                    succeeded ? Code.UPDATE_OK : Code.UPDATE_ERR,
+                    succeeded ? null : "保存失败，请稍后重试！");
+        } catch (DuplicateKeyException e) {
+            System.out.println(e.getMessage());
+            // 保存失败
+            return new ResponseResult(
+                    false,
+                    Code.UPDATE_ERR,
+                    "服务器繁忙，请稍后重试！");
+        }
+
+    }
+
+    @PutMapping("/list")
+    public ResponseResult updateBatch(@Validated @RequestBody List<E> entities, BindingResult bindingResult) {
+        String message = null;
+        List<String> uniqueMessages = new ArrayList<>();
+        entities.forEach(entity -> {
+            uniqueMessages.addAll(uniqueHandler.updateValid(entity));
+        });
+        if (uniqueMessages.size() > 0) {
+            return new ResponseResult(false, Code.CREATE_ERR, uniqueMessages.get(0));
+        }
+        try {
+            boolean succeeded = service.saveOrUpdateBatch(entities);
             return new ResponseResult(
                     succeeded,
                     succeeded ? Code.UPDATE_OK : Code.UPDATE_ERR,
@@ -278,20 +379,29 @@ public class BaseController<E extends Serializable> {
 
     }
 
-    @PutMapping("/{id}/{name}/{value}")
+    @PutMapping("/{id}/{fieldName}/{value}")
     public ResponseResult updateColumnById(
             @PathVariable Serializable id,
-            @PathVariable String name,
-            @PathVariable Object value) {
+            @PathVariable String fieldName,
+            @PathVariable Object value) throws NoSuchFieldException {
         E entity = service.getById(id);
-        UpdateWrapper<E> updateWrapper = new UpdateWrapper<>(entity);
-        updateWrapper.set(name, value);
+        if (entity != null) {
+            UpdateWrapper<E> updateWrapper = new UpdateWrapper<>(entity);
 
-        boolean succeeded = service.update(updateWrapper);
-        return new ResponseResult(
-                succeeded,
-                succeeded ? Code.UPDATE_OK : Code.UPDATE_ERR,
-                succeeded ? null : "修改失败");
+            updateWrapper.set(EntityUtil.getColumnNameByFieldName(entity.getClass(), fieldName), value);
+
+            boolean succeeded = service.update(updateWrapper);
+            return new ResponseResult(
+                    succeeded,
+                    succeeded ? Code.UPDATE_OK : Code.UPDATE_ERR,
+                    succeeded ? null : "修改失败");
+        }
+        else {
+            return new ResponseResult(
+                    null,
+                    Code.UPDATE_ERR,
+                    "修改失败");
+        }
     }
 
     @DeleteMapping("/{id}")

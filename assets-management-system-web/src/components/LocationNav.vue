@@ -24,14 +24,14 @@ export default {
             if (this.$route.fullPath.indexOf("/details/") !== -1) {
                 this.paths = [
                     { name: '首页', to: `/${this.$route.params.identity}/home` },
-                    { name: Data[this.$route.params.view].name, to: `/${this.$route.params.identity}/home/${this.$route.params.view}/` },
+                    { name: Data[this.$route.params.view].name, to: `/${this.$route.params.identity}/home/${this.$route.params.view}` },
                     { name: Data[this.$route.params.view].name + '详情', to: `/${this.$route.params.identity}/home/${this.$route.params.view}/details/${this.$route.params.id}` }
                 ]
             }
             else if (this.$route.params.view != undefined) {
                 this.paths = [
                     { name: '首页', to: `/${this.$route.params.identity}/home` },
-                    { name: Data[this.$route.params.view].name, to: `/${this.$route.params.identity}/home/${this.$route.params.view}/` }
+                    { name: Data[this.$route.params.view].name, to: `/${this.$route.params.identity}/home/${this.$route.params.view}` }
                 ]
             }
             else if (this.$route.params.identity != undefined) {

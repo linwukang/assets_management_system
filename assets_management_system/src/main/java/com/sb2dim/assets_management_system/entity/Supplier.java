@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -31,6 +32,7 @@ public class Supplier implements Serializable {
 
     @ApiModelProperty("名称")
     @TableField("name")
+    @NotBlank(message = "名称必填，请重新输入。")
     private String name;
 
     @TableField("type")

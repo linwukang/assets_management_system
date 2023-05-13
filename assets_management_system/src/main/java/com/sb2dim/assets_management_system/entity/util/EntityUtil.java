@@ -63,6 +63,10 @@ public class EntityUtil {
         }
     }
 
+    public static String getColumnNameByFieldName(Class<?> entityClass, String fieldName) throws NoSuchFieldException {
+        return getColumnNameByField(entityClass.getDeclaredField(fieldName));
+    }
+
     /**
      * 通过实体对象获取 TableId 列的字段
      *

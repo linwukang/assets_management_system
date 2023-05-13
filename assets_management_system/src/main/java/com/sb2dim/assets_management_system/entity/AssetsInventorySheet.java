@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -33,14 +35,22 @@ public class AssetsInventorySheet implements Serializable {
     private Integer assetsInventoryId;
 
     @ApiModelProperty("资产id")
-    @TableField("assets_id")
-    private Integer assetsId;
+    @TableField("asset_id")
+    private Integer assetId;
 
     @ApiModelProperty("盘点结果")
     @TableField("result")
+    @NotBlank(message = "盘点结果必填，请重新输入。")
     private String result;
 
     @ApiModelProperty("盘点备注")
     @TableField("remark")
+    @NotBlank(message = "盘点备注必填，请重新输入。")
+    @Size(min = 0, max = 20,
+            message = "盘点备注输入有误，请重新输入。")
     private String remark;
+
+    @ApiModelProperty("是否已盘点")
+    @TableField("is_inventoried")
+    private Boolean isInventoried;
 }

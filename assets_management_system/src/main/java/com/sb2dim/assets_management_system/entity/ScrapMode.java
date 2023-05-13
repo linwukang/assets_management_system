@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -31,10 +34,16 @@ public class ScrapMode implements Serializable {
 
     @ApiModelProperty("报废方式编号")
     @TableField("code")
+    @NotNull(message = "报废方式编号必填，请重新输入。")
+    // 允许英文字母、数字，不能以0开头，小于8
+    @Pattern(regexp = "^[1-9a-zA-Z][0-9a-zA-Z]{0,8}$", message = "报废方式编号输入有误，请重新输入。")
     private String code;
 
     @ApiModelProperty("报废方式名称")
     @TableField("name")
+    @NotNull(message = "报废方式名称必填，请重新输入。")
+    @Pattern(regexp = "^[0-9a-zA-Z\u4e00-\u9fa5]{2,10}$",
+            message = "报废方式名称输入有误，请重新输入。")
     private String name;
 
     @ApiModelProperty("是否已启用")
@@ -43,6 +52,8 @@ public class ScrapMode implements Serializable {
 
     @ApiModelProperty("备注")
     @TableField("remark")
+    @Size(min = 0, max = 100,
+            message = "备注输入有误，请重新输入。")
     private String remark;
 
     @ApiModelProperty("创建时间")

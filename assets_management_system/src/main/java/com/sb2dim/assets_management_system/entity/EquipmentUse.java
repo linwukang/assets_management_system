@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -43,7 +44,7 @@ public class EquipmentUse implements Serializable {
 
     @ApiModelProperty("设备用途名称")
     @TableField("name")
-
+    @NotNull(message = "设备用途名称必填，请重新输入。")
     // 允许英文字母、数字，不能以0开头，大于2小于10
     @Pattern(regexp = "^[1-9a-zA-Z][0-9a-zA-Z]{2,10}$")
     private String name;
@@ -54,10 +55,8 @@ public class EquipmentUse implements Serializable {
 
     @ApiModelProperty("备注")
     @TableField("remark")
-    // 不能为空（必填）
-    @NotBlank(message = "设备用途名称必填，请重新输入。")    // XXXX 填字段的中文名
     // 汉字，可输入长度100
-    @Pattern(regexp = "^[\u4e00-\u9fa5]{100}$",
+    @Size(min = 0, max = 100,
             message = "备注输入有误，请重新输入。")
     private String remark;
 

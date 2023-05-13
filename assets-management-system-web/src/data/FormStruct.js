@@ -549,12 +549,14 @@ export default {
             fieldName: 'name',
             required: true,
             rows: 1,
+            rule: /^[一-龥]{3,20}$/
         },
         {
             label: '品牌说明',
             fieldName: 'description',
             required: true,
             rows: 1,
+            rule:/^.{0,500}$/
         },
     ], 
     // 部门管理
@@ -587,18 +589,21 @@ export default {
             fieldName: 'code',
             required: true,
             rows: 1,
+            rule: /^[1-9a-zA-Z][0-9a-zA-Z]{7}$/,
         },
         {
             label: '设备用途名称',
             fieldName: 'name',
             required: true,
             rows: 1,
+            rule: /^[1-9a-zA-Z一-龥]{2,10}$/,
         },
         {
             label: '备注',
             fieldName: 'remark',
             required: false,
             rows: 6,
+            rule:/^.{0,100}$/
         },
     ], 
     // 取得方式
@@ -608,12 +613,14 @@ export default {
             fieldName: 'name',
             required: true,
             rows: 1,
+            rule: /^[一-龥]{3,20}$/
         },
         {
             label: '取得方式编码',
             fieldName: 'code',
             required: true,
             rows: 1,
+           rule: /^[1-9a-zA-Z][0-9a-zA-Z]{6,8}$/
         },
     ], 
     // 个人信息
@@ -625,13 +632,15 @@ export default {
                 label: '姓名',
                 fieldName: 'name',
                 required: true,
-                rows: 1
+                rows: 1,
+                rule: /^[1-9a-zA-Z一-龥]{2,10}$/,
             },
             {
                 label: '工号',
                 fieldName: 'code',
                 required: true,
-                rows: 1
+                rows: 1,
+                rule: /^[1-9][0-9]{3}$/,
             },
             {
                 label: '所属部门',
@@ -687,18 +696,21 @@ export default {
             fieldName: 'code',
             required:true,
             rows:1,
+            rule: /^[1-9a-zA-Z][0-9a-zA-Z]{7}$/,
         },
         {
             label:'报废方式名称',
             fieldName:'name',
             required:true,
             rows:1,
+            rule: /^[1-9a-zA-Z一-龥]{2,10}$/,
         },
         {
             label:'备注',
             fieldName:'remark',
             required:false,
             rows:6,
+            rule:/^.{0,100}$/
         },
     ], 
     // 存放地点
@@ -708,12 +720,14 @@ export default {
             fieldName: 'name',
             required: true,
             rows: 1,
+            rule: /^[a-zA-Z一-龥]{2,20}$/
         },
         {
             label: '备注',
             fieldName: 'remark',
             required: false,
             rows: 6,
+            rule:/^.{0,100}$/
         },
     ], 
     // 供应商
@@ -723,6 +737,7 @@ export default {
             fieldName: 'name',
             required: true,
             rows: 1,
+            rule: /^[1-9a-zA-Z一-龥]{2,40}$/
         },
         {
             label: '供应商类型',
@@ -740,24 +755,28 @@ export default {
             fieldName: 'contactPerson',
             required: true,
             rows: 1,
+            rule: /^[a-zA-Z一-龥]{2,20}$/
         },
         {
             label: '移动电话',
             fieldName: 'contactTel',
             required: true,
             rows: 1,
+            rule: /^[0-9]{11}$/
         },
         {
             label: '地址',
             fieldName: 'address',
             required: false,
             rows: 1,
+            rule: /^[1-9a-zA-Z一-龥]{2,30}$/
         },
         {
             label: '备注',
             fieldName: 'remark',
             required: false,
             rows: 6,
+            rule:/^.{0,500}$/
         },
     ], 
     // 用户信息

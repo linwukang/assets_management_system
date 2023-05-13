@@ -63,6 +63,7 @@
             {{ right.text }}
         </el-button>
     </div>
+    <!-- {{ getConditions() }} -->
 </div>
 </template>
 
@@ -86,7 +87,8 @@ export default {
                 for (var j in this.content.left[i]) {
                     let item = this.content.left[i][j]
                     if (this.dataContent[item.fieldName] !== null 
-                        && this.dataContent[item.fieldName] !== undefined) {
+                        && this.dataContent[item.fieldName] !== undefined
+                        && this.dataContent[item.fieldName] !== '') {
                         switch (item.type) {
                             case "input":
                                 this.addCondition(

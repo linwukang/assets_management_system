@@ -1,4 +1,34 @@
 import router from '../router/index'
+import util from '../util'
+import FormDialog from '../components/FormDialog.vue'
+import FormStruct from './FormStruct'
+import Service from '../Service'
+
+let assetsClassSelect = {
+    type: 'select',
+    options: [],
+    from: {
+        table: "assets-class",
+        label: "name",
+        value: "id",
+    }
+}
+
+let storagePlaceSelect = {
+    type: 'select',
+    options: [],
+    from: {
+        table: "storage-place",
+        label: "name",
+        value: "id",
+    }
+}
+
+export {
+    assetsClassSelect,
+    storagePlaceSelect
+}
+
 export default {
     'assets-borrow': {
         left: [[
@@ -15,13 +45,7 @@ export default {
             { type: 'input', fieldName: 'code', label: '借用单号', width: 150 },
             { type: 'input', fieldName: 'Personnel(borrowerId).name,Personnel(borrowerId).code', label: '借用人姓名/工号', width: 150 },
             {
-                type: 'select',
-                options: [],
-                from: {
-                    table: "assets-class",
-                    label: "name",
-                    value: "id",
-                },
+                ...assetsClassSelect,
                 fieldName: 'AssetsStorage(assetId).assetClassId',
                 label: '资产类别',
                 width: 150
@@ -39,7 +63,24 @@ export default {
     },
     'assets-class': {
         left: [],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增资产类别",
+                    content: FormStruct['assets-class'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'assets-class', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'assets-information-maintenance': {
         left: [[
@@ -54,13 +95,7 @@ export default {
                 width: 150
             },
             {
-                type: 'select',
-                options: [],
-                from: {
-                    table: "assets-class",
-                    label: "name",
-                    value: "id",
-                },
+                ...assetsClassSelect,
                 fieldName: 'assetClassId',
                 label: '资产类别',
                 width: 150
@@ -101,7 +136,12 @@ export default {
             },
             { type: 'input', fieldName: 'name', label: '盘点单号', width: 150 },
         ]],
-        right: []
+        right: [{
+            text: '新增盘点单',
+            click() {
+                router.push('assets-inventory/new-inventory')
+            },
+        }]
     },
     'assets-inventory-sheet': {
         left: [],
@@ -111,13 +151,7 @@ export default {
         left: [[
             { type: 'input', fieldName: 'code', label: '维修单号', width: 150 },
             {
-                type: 'select',
-                options: [],
-                from: {
-                    table: "assets-class",
-                    label: "name",
-                    value: "id",
-                },
+                ...assetsClassSelect,
                 fieldName: 'AssetsStorage(assetId).assetClassId',
                 label: '资产类别',
                 width: 150
@@ -133,7 +167,12 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '维修登记',
+            click() {
+                router.push('assets-maintain/new')
+            },
+        }]
     },
     'assets-purchase-requisition': {
         left: [[
@@ -150,7 +189,12 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '申购登记',
+            click() {
+                router.push('assets-purchase-requisition/new')
+            },
+        }]
     },
     'assets-scrap': {
         left: [[
@@ -178,7 +222,12 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '报废登记',
+            click() {
+                router.push('assets-scrap/new')
+            },
+        }]
     },
     'assets-storage': {
         left: [[
@@ -193,13 +242,7 @@ export default {
                 width: 150
             },
             {
-                type: 'select',
-                options: [],
-                from: {
-                    table: "assets-class",
-                    label: "name",
-                    value: "id",
-                },
+                ...assetsClassSelect,
                 fieldName: 'assetClassId',
                 label: '资产类别',
                 width: 150
@@ -223,19 +266,18 @@ export default {
                 width: 180
             }
         ]],
-        right: []
+        right: [{
+            text: '入库登记',
+            click() {
+                router.push('assets-storage/new')
+            },
+        }]
     },
     'assets-transfer': {
         left: [[
             { type: 'input', fieldName: 'code', label: '转移单号', width: 150 },
             {
-                type: 'select',
-                options: [],
-                from: {
-                    table: "assets-class",
-                    label: "name",
-                    value: "id",
-                },
+                ...assetsClassSelect,
                 fieldName: 'AssetsStorage(AssetsBorrow(assetsBorrowId).assetId).assetClassId',
                 label: '资产类别',
                 width: 150
@@ -251,15 +293,54 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '转移登记',
+            click() {
+                router.push('assets-transfer/new')
+            },
+        }]
     },
     'brand': {
         left: [],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增品牌",
+                    content: FormStruct['brand'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'brand', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'department': {
         left: [],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增部门",
+                    content: FormStruct['department'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'department', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'equipment-use': {
         left: [[
@@ -270,11 +351,45 @@ export default {
                 width: 200 
             },
         ]],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增设备用途",
+                    content: FormStruct['equipment-use'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'equipment-use', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'gaining-method': {
         left: [],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增取得方式",
+                    content: FormStruct['gaining-method'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'gaining-method', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'personal-info': {
         left: [],
@@ -291,7 +406,7 @@ export default {
                     value: "id",
                 },
                 fieldName: 'departmentId',
-                label: '资产类别',
+                label: '所属部门',
                 width: 150
             },
             {
@@ -312,7 +427,12 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '添加人员',
+            click() {
+                router.push('personnel/new')
+            },
+        }]
     },
     'scrap-mode': {
         left: [[
@@ -323,7 +443,24 @@ export default {
                 width: 200 
             },
         ]],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增报废方式",
+                    content: FormStruct['scrap-mode'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'scrap-mode', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'storage-place': {
         left: [[
@@ -344,7 +481,24 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增存放地点",
+                    content: FormStruct['storage-place'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'storage-place', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'supplier': {
         left: [[
@@ -377,7 +531,24 @@ export default {
                 width: 150
             }
         ]],
-        right: []
+        right: [{
+            text: '新增',
+            click() {
+                util.createComponent(FormDialog, {
+                    title: "新增供应商",
+                    content: FormStruct['supplier'],
+                    dataLine: {},
+                    onSave: (data, ok) => { 
+                        Service.create(
+                            'supplier', 
+                            data, 
+                            ok
+                        )
+                    },
+                    onCancel: () => { },
+                })
+            },
+        }]
     },
     'user-info': {
         left: [],

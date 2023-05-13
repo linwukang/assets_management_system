@@ -109,6 +109,7 @@ export default {
     },
     // 格式化日期 yyyy-MM-dd hh:mm:ss
     DateTimeFormat(date) {
+        if (date === undefined || date === null || date === '') return ''
         let b = new Date(date)
         return b.getFullYear() + "-" +
             (b.getMonth() + 1) + "-" +

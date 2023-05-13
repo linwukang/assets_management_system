@@ -1,6 +1,8 @@
 package com.sb2dim.assets_management_system;
 
 //import com.sb2dim.assets_management_system.old.mapper.AssetsClassMapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sb2dim.assets_management_system.entity.*;
@@ -11,6 +13,8 @@ import com.sb2dim.assets_management_system.mapper.AssetsClassMapper;
 import com.sb2dim.assets_management_system.service.AssetsClassService;
 import com.sb2dim.assets_management_system.service.AssetsStorageService;
 import com.sb2dim.assets_management_system.entity.util.EntityUtil;
+import com.sb2dim.assets_management_system.service.DepartmentService;
+import com.sb2dim.assets_management_system.service.PersonnelService;
 import com.sb2dim.assets_management_system.util.RequestWrapper;
 import com.sb2dim.assets_management_system.util.RequestWrapperImpl;
 import com.sb2dim.assets_management_system.validation.handler.UniqueHandler;
@@ -23,6 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 @SpringBootTest
 class AssetsManagementSystemApplicationTests {
@@ -33,6 +38,13 @@ class AssetsManagementSystemApplicationTests {
 
     @Autowired
     AssetsStorageService assetsStorageService;
+
+    @Autowired
+    DepartmentService departmentService;
+
+    @Autowired
+    PersonnelService personnelService;
+
     @Test
     void test01() {
 //        assetsClassService.list().forEach(System.out::println);

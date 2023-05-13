@@ -73,6 +73,12 @@ export default {
         }
     },
     mounted() {
+        // if (this.operating === undefined) {
+        //     this.operating = []
+        // }
+        // else if (this.vertical === undefined) {
+        //     this.vertical = false
+        // }
         this.updateDataSource()
         for (let field_name in this.display) {
             this.widthSum += this.display[field_name].width

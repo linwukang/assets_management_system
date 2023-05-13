@@ -76,10 +76,10 @@ export default {
                     {
                         name: "个人信息",
                         icon: "fa-solid fa-user-secret",
-                        to: basePath + "/personal-info",
+                        to: basePath + "/my",
                     },
                 ],
-                'asset-administrator': [
+                'assets-manager': [
                     {
                         name: "资产申购",
                         icon: "fa-solid fa-user-secret",
@@ -128,10 +128,10 @@ export default {
                     {
                         name: "个人信息",
                         icon: "fa-solid fa-user-secret",
-                        to: basePath + "/personal-info",
+                        to: basePath + "/my",
                     },
                 ],
-                'asset-leader': [],
+                'assets-leader': [],
             },
             homePath: `/${this.$route.params.identity}/home`
         }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 
 /**
@@ -35,6 +36,7 @@ public class AssetsStorage implements Serializable {
 
     @ApiModelProperty("资产名称")
     @TableField("name")
+    // 允许汉字、英文字母、数字，可输入长度大于等于2个字小于等于30个字
     private String name;
 
     @ApiModelProperty("资产类别id")
@@ -63,6 +65,7 @@ public class AssetsStorage implements Serializable {
 
     @ApiModelProperty("资产状态")
     @TableField("state")
+    @Null(message = "不能指定资产状态")
     private String state;
 
     @ApiModelProperty("资产照片")

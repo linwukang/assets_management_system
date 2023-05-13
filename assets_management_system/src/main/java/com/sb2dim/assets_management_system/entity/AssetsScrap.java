@@ -6,8 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.sb2dim.assets_management_system.entity.auto_fill.annotation.TimestampCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
@@ -35,6 +39,7 @@ public class AssetsScrap implements Serializable {
 
     @ApiModelProperty("报废单号")
     @TableField("code")
+    @TimestampCode(prefix = "BF")
     private String code;
 
     @ApiModelProperty("申请人id")
@@ -59,5 +64,8 @@ public class AssetsScrap implements Serializable {
 
     @ApiModelProperty("审核不通过原因")
     @TableField("not_approving_reasons")
+    @NotBlank(message = "审核不通过原因必填，请重新输入。")
+    @Pattern(regexp = "^[0-9a-zA-Z\u4e00-\u9fa5]{1,100}$",
+            message = "审核不通过原因输入有误，请重新输入。")
     private String notApprovingReasons;
 }

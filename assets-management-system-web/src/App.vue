@@ -5,6 +5,12 @@
         <el-button @click="gotoHome('/asset-administrator')">资产管理员</el-button><br>
         <el-button @click="gotoHome('/asset-leader')">资产领导</el-button><br>
     </div>
+    <!-- <div>
+        <AddAssetsToInventoryDialog
+            :excludeAssetsId="[1, 2, 4]"
+            :assetsToinventoryId="1">
+        </AddAssetsToInventoryDialog>
+    </div> -->
     <router-view></router-view>
 </div>
 </template>
@@ -18,7 +24,7 @@ import Login from "./components/Login.vue"
 import SideMenu from "./components/SideMenu.vue"
 import Home from "./views/HomeView.vue"
 import FormView from "./views/FormView.vue"
-
+import AddAssetsToInventoryDialog from "./components/AssetsInventory/AddAssetsToInventoryDialog.vue"
 export default {
     data() {
         return {
@@ -93,6 +99,7 @@ export default {
         SideMenu,
         Home,
         FormView,
+        AddAssetsToInventoryDialog,
     },
 };
 </script>

@@ -1,10 +1,13 @@
 <template>
 <!-- 详情视图 -->
 <div class="details-view">
-    <div v-for="block in form">
-        <h2 class="title"><i>{{ block.icon }}</i>{{ block.title }}</h2>
-        <div class="form" v-for="unit, key in block.form" :class="key">
-            <el-form v-for="item in unit">
+    <div v-for="block in form" class="form-block">
+        <h2 class="title">
+            <font-awesome-icon :icon="block.icon" />
+            {{ block.title }}
+        </h2>
+        <div class="form-block-content" v-for="unit, key in block.form" :class="key">
+            <el-form v-for="item in unit" class="form-line">
                 <div v-if="item.type === 'text' 
                             || (item.textualization 
                                 && item.textualization(dataContent, item.fieldName))">
@@ -37,8 +40,10 @@
                         :type="item.rows && item.rows > 1 ? 'textarea' : ''"
                         v-model="submitContent[item.fieldName]"
                         :rows="item.rows">
-
                     </el-input>
+                </div>
+                <div v-else-if="item.type === 'pass'">
+                    <div class="pass"> </div>
                 </div>
             </el-form>
         </div>
@@ -70,10 +75,44 @@ export default {
     },
     methods: {
         save() {
-
+            // for (var fieldName in this.submitContent) {
+            //     Service.updateById(
+            //         this.$route.params.view,
+            //         this.$route.params.id,
+            //         fieldName,
+            //         this.submitContent[fieldName],
+            //         (okay, message) => {
+            //             if (okay) {
+            //                 this.tip('保存成功', 'success')
+            //             } else {
+            //                 this.tip(message, 'error')
+            //             }
+            //         }
+            //     )
+            // }
+            Service.save(
+                Data[this.$route.params.view].url,
+                this.submitContent,
+                (okay, message) => {
+                    if (okay) {
+                        this.tip("保存成功", 'success')
+                    }
+                    else {
+                        this.tip(message, 'error')
+                    }
+                }
+            )
         },
         cancel() {
             this.$router.go(-1)
+        },
+        tip(message, type) {
+            this.$message({
+                    title: '',
+                    message: message,
+                    type: type,
+                    duration: 2000
+                })
         },
         showBottom() {
             if (Object.keys(this.submitContent).length == 0) return false;
@@ -105,20 +144,38 @@ export default {
             for (let j in this.form[i].form) {
                 for (let k in this.form[i].form[j]) {
                     let item = this.form[i].form[j][k]
-                    fieldNames.push(item.fieldName)
-                    switch (item.type) {
-                        case "input":
-                        case "date":
-                        case "textarea":
-                            this.$set(
-                                this.submitContent, 
-                                item.fieldName, 
-                                null)
+                    if (item.fieldName !== undefined
+                        && item.fieldName !== null
+                        && item.fieldName !== '') {
+                        fieldNames.push(item.fieldName)
                     }
+                    // switch (item.type) {
+                    //     case "input":
+                    //     case "date":
+                    //     case "textarea":
+                    //         this.$set(
+                    //             this.submitContent, 
+                    //             item.fieldName, 
+                    //             null)
+                    // }
                 }
             }
         }
-        // console.log(fieldNames)
+
+        // for (let fieldName in Data[this.$route.params.view].struct) {
+        //     this.$set(
+        //         this.submitContent, 
+        //         fieldName, 
+        //         null)
+        // }
+        Service.getById(
+            Data[this.$route.params.view].url, 
+            this.$route.params.id,
+            (data) => {
+                this.submitContent = data
+            })
+
+        console.log(fieldNames)
         // console.log(this.tableName)
         // console.log(this.id)
         Service.joinById(
@@ -153,31 +210,44 @@ export default {
 .details-view {
     @line-height: 30px;
     line-height: @line-height;
-    .title {
-        display: block;
-        clear: both;
-    }
-    .left, .right {
-        float: left;
-        width: 50%;
-    }
-    .form {
-        .bold {
-            font-weight: bold;
+    .form-block {
+        .title {
+            display: block;
+            clear: both;
+            margin: 10px 10px;
         }
-        .label {
-            display: inline-block;
-            min-width: 100px;
-            text-align: right;
-            margin-right: 20px;
-            color: #515050;
+        .left, .right {
+            float: left;
+            width: 50%;
         }
-        .required::before {
-            display: inline-block;
-            content: "*";
-            line-height: @line-height;
-            height: @line-height;
-            color: red;
+        .form-line {
+            margin-top: 7px;
+            >div {
+                display: flex;
+                >.bold {
+                    font-weight: bold;
+                }
+                >.label {
+                    display: block;
+                    float: left;
+                    min-width: 100px;
+                    text-align: right;
+                    margin-right: 20px;
+                    color: #515050;
+                }
+                >.required::before {
+                    display: inline-block;
+                    content: "*";
+                    line-height: @line-height;
+                    height: @line-height;
+                    color: red;
+                }
+                >.pass {
+                    display: block;
+                    content: ' ';
+                    height: @line-height;
+                }
+            }
         }
     }
     >.bottom {

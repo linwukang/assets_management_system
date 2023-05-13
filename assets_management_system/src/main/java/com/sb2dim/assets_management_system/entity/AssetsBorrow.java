@@ -47,12 +47,12 @@ public class AssetsBorrow implements Serializable {
     @ApiModelProperty("借用人员id")
     @TableField("borrower_id")
     // 不能为空（必填）
-    @NotNull(message = "借用人员id必填，请重新输入。")
+    @NotNull(message = "借用人员必填，请重新输入。")
     private Integer borrowerId;
 
     @ApiModelProperty("借用日期")
     @TableField("borrow_date")
-    @Past
+    @Past(message = "借用日期输入有误，请重新输入。")
     // 不能为空（必填）
     @NotNull(message = "借用日期必填，请重新输入。")
     private Date borrowDate;
@@ -67,6 +67,8 @@ public class AssetsBorrow implements Serializable {
 
     @ApiModelProperty("归还日期")
     @TableField("return_date")
+    @Past(message = "归还日期输入有误，请重新输入。")
+//    @NotNull(message = "归还日期必填，请重新输入。")
     private Date returnDate;
 
     @ApiModelProperty("归还状态")
@@ -75,5 +77,7 @@ public class AssetsBorrow implements Serializable {
 
     @ApiModelProperty("备注")
     @TableField("remark")
+    @Size(min = 0, max = 200,
+            message = "备注输入有误，请重新输入。")
     private String remark;
 }

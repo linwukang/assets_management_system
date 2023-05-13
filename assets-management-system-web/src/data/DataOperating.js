@@ -3,6 +3,8 @@ import util from "../util"
 import FormStruct from "./FormStruct"
 import router from "../router"
 import Service from "../Service"
+import Vue from "vue"
+import CloseInventoryDialog from '../components/AssetsInventory/CloseInventoryDialog.vue'
 
 export default {
     // 资产借还
@@ -80,12 +82,54 @@ export default {
         let deleteLine = {
             click: () => {
                 Service.deleteById("assets-inventory", line.id, () => {})
+            },
+            popconfirm: {
+                confirm: "确定",
+                cancel: "取消",
+                title: "您正在删除该资产盘点单，删除后数据无法恢复。您确认要删除吗？",
             }
         }
 
-        let startInventory = {}
-        let continueInventory = {}
-        let closeInventory = {}
+        let startInventory = {
+            click: () => {
+                router.push(`assets-inventory/result-entry/${line.id}`)
+                Service.updateById(
+                    'assets-inventory', 
+                    line.id,
+                    'state',
+                    'in_progress'
+                    )
+            },
+            popconfirm: {
+                confirm: "确定",
+                cancel: "取消",
+                title: "开始盘点之后将不能再编辑盘点单，您确定要开始盘点吗？",
+            }
+        }
+        let continueInventory = {
+            click: () => {
+                router.push(`assets-inventory/result-entry/${line.id}`)
+            }
+        }
+        let closeInventory = {
+            click: () => {
+                Service.canCloseInventory(
+                    line.id, 
+                    (okay, message) => {
+                        if (okay) {
+                            util.createComponent(CloseInventoryDialog, {
+                                id: line.id
+                            })
+                        } else {
+                            Vue.prototype.$msgbox({
+                                type: 'error',
+                                title: '结束盘点',
+                                message: message
+                            })
+                        }
+                    })
+            },
+        }
 
         switch (line.state) {
             case "not_started":     // 未开始
@@ -102,7 +146,7 @@ export default {
             case "finished":        // 已结束
                 return {}
             default:
-                return
+                return {}
         }
     }, 
     'assets-inventory-sheet': null, 
