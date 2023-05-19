@@ -29,10 +29,13 @@
                     <!-- 文件上传 -->
                     <el-upload
                         drag
-                        action="item.upload.action"
+                        action="upload/images"
+                        :auto-upload="true"
+                        :before-upload="(file) => uploadFile(file, dataContent, item.fieldName)"
                         multiple
                         style="width: 100%;"
                         v-else-if="item.upload">
+                        <img :src="dataContent[item.fieldName]" alt="" onerror="this.style.display='none'">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     </el-upload>
@@ -81,7 +84,8 @@ export default {
             dataContent: {},
             fieldNames: [],
             show: true,
-            title: ''
+            title: '',
+            imgSrc: ''
         }
     },
     methods: {
@@ -164,6 +168,25 @@ export default {
                     }
                 }
             }
+        },
+        uploadFile(file, dataContent, fieldName) {
+            console.log(file)
+            Service.uploadFile(
+                file,
+                'upload/images',
+                (url) => {
+                    console.log("url", url)
+                    dataContent[fieldName] = url
+                },
+                (okay, message) => {
+                    if (okay) {
+                        this.tip("上传成功", 'success')
+                    } else {
+                        this.tip(message, 'error')
+                    }
+                }
+            )
+            return false
         }
     },
     computed: {},
@@ -224,6 +247,10 @@ export default {
         padding: 30px 50px;
         position: relative;
         width: 30%;
+        .el-upload-dragger>img {
+            width: 100%;
+            height: 100%;
+        }
     }
     .left::after, .right::after {
         content: "";

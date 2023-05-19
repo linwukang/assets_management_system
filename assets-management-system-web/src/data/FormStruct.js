@@ -282,7 +282,9 @@ export default {
                 label: '资产照片',
                 fieldName: 'assetPhotograph',
                 required: false,
-                upload: {}
+                upload: {
+                    action: 'upload/images'
+                }
             },
             {
                 label: '申购建议',
@@ -294,7 +296,7 @@ export default {
             {
                 label: '申请日期',
                 fieldName: 'purchaseRequisitionDate',
-                required: false,
+                required: true,
                 date: true
             },
         ],
@@ -327,7 +329,7 @@ export default {
             {
                 label: '申购理由',
                 fieldName: 'reason',
-                required: false,
+                required: true,
                 rule: /^.{0,200}$/,
                 rows: 6
             },

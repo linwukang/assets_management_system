@@ -2,8 +2,8 @@
 <div id="app">
     <div>
         <el-button @click="gotoHome('/system-administrator')">系统管理员</el-button><br>
-        <el-button @click="gotoHome('/asset-administrator')">资产管理员</el-button><br>
-        <el-button @click="gotoHome('/asset-leader')">资产领导</el-button><br>
+        <el-button @click="gotoHome('/assets-manager')">资产管理员</el-button><br>
+        <el-button @click="gotoHome('/assets-leader')">资产领导</el-button><br>
     </div>
     <!-- <div>
         <AddAssetsToInventoryDialog

@@ -103,7 +103,6 @@ public class AssetsPurchaseRequisition implements Serializable {
 
     @ApiModelProperty("审核不通过原因")
     @TableField("not_approving_reasons")
-    @NotBlank(message = "审核不通过原因必填，请重新输入。")
     @Pattern(regexp = "^[0-9a-zA-Z\u4e00-\u9fa5]{1,100}$",
             message = "审核不通过原因输入有误，请重新输入。")
     private String notApprovingReasons;

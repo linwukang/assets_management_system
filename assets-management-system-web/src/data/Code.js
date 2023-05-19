@@ -36,4 +36,8 @@ export default {
     LOGGED_IN: 1200002,
     // 未登录
     NOT_LOGGED_IN: 1200003,
+        // 文件上传成功
+    UPLOAD_OK: 1300000,
+        // 文件上传失败
+    UPLOAD_ERR: 1300001,
 }

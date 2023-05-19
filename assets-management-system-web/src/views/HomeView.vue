@@ -131,7 +131,18 @@ export default {
                         to: basePath + "/my",
                     },
                 ],
-                'assets-leader': [],
+                'assets-leader': [
+                    {
+                        name: "资产申购审批",
+                        icon: "fa-solid fa-user-secret",
+                        to: basePath + "/assets-purchase-requisition-approval",
+                    },
+                    {
+                        name: "资产报废审批",
+                        icon: "fa-solid fa-user-secret",
+                        to: basePath + "/assets-scrap-approval",
+                    },
+                ],
             },
             homePath: `/${this.$route.params.identity}/home`
         }

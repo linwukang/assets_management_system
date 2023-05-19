@@ -39,4 +39,9 @@ public class Code {
     public static final Integer LOGGED_IN = 1200002;
     // 未登录
     public static final Integer  NOT_LOGGED_IN = 1200003;
+
+    // 文件上传成功
+    public static final Integer UPLOAD_OK = 1300000;
+    // 文件上传失败
+    public static final Integer UPLOAD_ERR = 1300001;
 }

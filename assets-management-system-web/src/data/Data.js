@@ -406,7 +406,7 @@ let Data = {
 				name: "申购单号",
 				width: 400
 			},
-			"name": {
+			"assetName": {
 				name: "申购资产名",
 				width: 300,
 			},
@@ -437,7 +437,9 @@ let Data = {
 				name: "申请状态",
 				width: 150,
 				value(dataSource, index) {
-					if (dataSource[index].applicationStatus === 'unread')
+					if (dataSource[index].applicationStatus === 'uncommitted')
+						return '未提交'
+					if (dataSource[index].applicationStatus === 'committed')
 						return '未批阅'
 					if (dataSource[index].applicationStatus === 'not_approved')
 						return '审批不通过'
@@ -498,18 +500,26 @@ let Data = {
 				name: "报废方式",
 				width: 200
 			},
-			"assetState": {
+			"AssetsStorage(assetId).state": {
 				name: "资产状态",
-				width: 200,
-				value(dataSource, index) {
-					return dataSource[index].state === "通过"
-						? "报废"
-						: "正常"
-				}
-			},
-			"state": {
-				name: "申请状态",
 				width: 200
+			},
+			"applicationStatus": {
+				name: "申请状态",
+				width: 150,
+				value(dataSource, index) {
+					if (dataSource[index].applicationStatus === 'uncommitted')
+						return '未提交'
+					if (dataSource[index].applicationStatus === 'committed')
+						return '未批阅'
+					if (dataSource[index].applicationStatus === 'not_approved')
+						return '审批不通过'
+					if (dataSource[index].applicationStatus === 'approved')
+						return '审批通过'
+					else
+						return dataSource[index].applicationStatus
+
+				}
 			},
 		}
 	},

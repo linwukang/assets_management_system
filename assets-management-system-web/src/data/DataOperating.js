@@ -74,14 +74,14 @@ export default {
         let edit = {
             click: () => {
                 router.push({
-                    path: `assets-inventory/edit/${line.id}`
+                    path: `assets-inventory/edit-inventory/${line.id}`
                 })
             }
         }
 
         let deleteLine = {
-            click: () => {
-                Service.deleteById("assets-inventory", line.id, () => {})
+            click: (ok) => {
+                Service.deleteById("assets-inventory", line.id, ok)
             },
             popconfirm: {
                 confirm: "确定",
@@ -164,7 +164,14 @@ export default {
         return {
             edit,
             submit: {
-                click: () => {}
+                popconfirm: {
+                    confirm: '确定',
+                    cancel: "取消",
+                    title: "您正在提交该资产申购单。您确认要提交吗？",
+                },
+                click: () => {
+                    
+                }
             },
             delete: {
                 click: () => {}
@@ -172,7 +179,31 @@ export default {
         }
     }, 
     // 资产报废
-    'assets-scrap': null, 
+    'assets-scrap': (line) => {
+        let edit = {
+            click: () => {
+                router.push({
+                    path: `assets-scrap/edit/${line.id}`,
+                })
+            },
+        }
+        return {
+            edit,
+            submit: {
+                popconfirm: {
+                    confirm: '确定',
+                    cancel: "取消",
+                    title: "您正在提交该资产报废单。您确认要提交吗？",
+                },
+                click: () => {
+                    
+                }
+            },
+            delete: {
+                click: () => {}
+            }
+        }
+    }, 
     // 资产入库
     'assets-storage': null, 
     // 资产转移

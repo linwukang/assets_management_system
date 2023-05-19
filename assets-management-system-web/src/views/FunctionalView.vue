@@ -71,7 +71,7 @@ export default {
                 Data[this.$route.params.view].url,
                 conditions,
                 (data) => { this.dataCount = data },
-                (okay, message) => { okay ? null : this.tip(message, "error") }
+                // (okay, message) => { okay ? null : this.tip(message, "error") }
             )
         },
         tip(message, type) {

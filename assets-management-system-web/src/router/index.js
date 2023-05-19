@@ -9,9 +9,12 @@ import FormView from "../views/FormView.vue"
 import NewView from "../views/NewView.vue"
 import DetailsView from "../views/DetailsView.vue"
 import NewAssetsInventoryView from "../views/AssetsInventory/NewAssetsInventoryView.vue"
+import EditAssetsInventoryView from "../views/AssetsInventory/EditAssetsInventoryView.vue"
 import AssetsInventoryResultEntryView from "../views/AssetsInventory/AssetsInventoryResultEntryView.vue"
 import AssetsInventoryResultView from "../views/AssetsInventory/AssetsInventoryResultView.vue"
 import PersonalInfoView from "../views/PersonalInfoView.vue"
+import AssetsPurchaseRequisitionApproval from "../views/Leader/AssetsPurchaseRequisitionApproval.vue"
+import AssetsScrapApproval from "../views/Leader/AssetsScrapApproval.vue"
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,14 @@ const router = new VueRouter({
       component: Home,
       children: [
         {
+          path: 'assets-purchase-requisition-approval',
+          component: AssetsPurchaseRequisitionApproval
+        },
+        {
+          path: 'assets-scrap-approval',
+          component: AssetsScrapApproval
+        },
+        {
           path: 'my',
           component: PersonalInfoView,      // 个人信息
         },
@@ -42,6 +53,10 @@ const router = new VueRouter({
         {
           path: 'assets-inventory/new-inventory',   // 新增资产盘点
           component: NewAssetsInventoryView,
+        },
+        {
+          path: 'assets-inventory/edit-inventory/:id',   // 编辑资产盘点
+          component: EditAssetsInventoryView,
         },
         {
           path: 'assets-inventory/result-entry/:id',  // 盘点结果录入

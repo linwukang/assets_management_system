@@ -280,7 +280,7 @@ let createMultiple = function (tableName, datalist, ok) {
         .then((result) => {
             console.log(result)
             if (result.data.code === Code.CREATE_OK) {
-                ok(true)
+                ok(true, result.data.data)
             }
             else {
                 ok(false, result.data.message)
@@ -298,7 +298,7 @@ let save = function (tableName, data, ok) {
         .put(url, data)
         .then((result) => {
             if (result.data.code === Code.UPDATE_OK) {
-                ok(true)
+                ok(true, result.data.data)
             }
             else {
                 ok(false, result.data.message)
@@ -347,9 +347,22 @@ let updateById = function (tableName, id, fieldName, value, ok) {
 
 // 通过id删除数据
 let deleteById = function (tableName, id, ok) {
-    if (!ok) {
-        ok = () => { }
-    }
+    if (!ok) { ok = () => { } }
+
+    let url = `${tableName}/${id}`
+    Vue.prototype.$http
+        .delete(url)
+        .then((result) => {
+            console.log(result)
+            if (result.data.code === Code.DELETE_OK) {
+                ok(true)
+            }
+            else {
+                ok(false, result.data.message)
+            }
+        }).catch((error) => {
+            ok(false, error.message)
+        })
 }
 
 let login = function (username, password, ok) {
@@ -439,6 +452,36 @@ let getIdentity = function (get, ok) {
         })
 }
 
+// 上传文件
+let uploadFile = function (file, action, get, ok) {
+    ok = ok ? ok : () => {}
+    let url = action
+
+    const formData = new FormData()
+    formData.append('file', file)
+    
+    // 设置请求头的 enctype 属性为 multipart/form-data
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+
+    Vue.prototype.$http
+        .post(url, formData, config)
+        .then((result) => {
+            if (result.data.code === Code.UPLOAD_OK) {
+                get(result.data.data)
+                ok(true)
+            }
+            else {
+                ok(false, result.data.message)
+            }
+        }).catch((error) => {
+            ok(false, error.message)
+        })
+}
+
 const Service = {
     list,
     listByIdList,
@@ -463,6 +506,7 @@ const Service = {
     canCloseInventory,
     getPersonalInfo,
     getIdentity,
+    uploadFile,
 }
 
 export { 
