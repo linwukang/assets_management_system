@@ -1,10 +1,10 @@
 <template>
 <div id="app">
-    <div>
+    <!-- <div>
         <el-button @click="gotoHome('/system-administrator')">系统管理员</el-button><br>
         <el-button @click="gotoHome('/assets-manager')">资产管理员</el-button><br>
         <el-button @click="gotoHome('/assets-leader')">资产领导</el-button><br>
-    </div>
+    </div> -->
     <!-- <div>
         <AddAssetsToInventoryDialog
             :excludeAssetsId="[1, 2, 4]"
@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 * {
     margin: 0;
     padding: 0;
@@ -112,7 +112,7 @@ export default {
 
 #app {
     background-color: beige;
-
+    height: 100%;
     // h1 {
     //     line-height: 50px;
     //     font-size: 20px;

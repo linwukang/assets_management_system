@@ -434,7 +434,7 @@ export default {
 </script>
 
     
-<style lang="less">
+<style lang="less" scope>
 .assets-inventory-result-entry-view {
     >div>.data-list-operating {
         float: left;

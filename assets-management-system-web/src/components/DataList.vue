@@ -130,7 +130,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .data-list {
     >table {
         .router-link {

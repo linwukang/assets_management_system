@@ -275,7 +275,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .data-list-operating {
     padding: 20px 0;
     .left {

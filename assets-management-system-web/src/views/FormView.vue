@@ -227,7 +227,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .form-view {
     background-color: white;
     

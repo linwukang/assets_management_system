@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .location-nav {
     background: linear-gradient(#ffffff, #f0f0f0);
     border-bottom: 1px solid #dfdfdf;

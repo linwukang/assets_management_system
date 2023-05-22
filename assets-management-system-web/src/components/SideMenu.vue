@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .side-menu {
     .el-menu-item, .is-active {
         background-color: #ffffff;

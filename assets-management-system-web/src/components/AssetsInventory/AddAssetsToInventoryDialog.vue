@@ -492,7 +492,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .add-assets-to-inventory-dialog {
     border: 1px solid #bbe0ff;
     color: rgb(95, 95, 95);

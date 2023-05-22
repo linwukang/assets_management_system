@@ -5,7 +5,7 @@
     :before-close="cancel"
     >
     <div slot="title" class="title">{{ title }}</div>
-    <el-form ref="form" label-width="100px">
+    <el-form ref="form" label-width="125px">
         <div v-for="item in content" :class="item.required ? 'required' : ''">
             <el-form-item :label="item.label">
                 <el-select v-model="data_line[item.fieldName]" v-if="item.options">
@@ -109,104 +109,121 @@ export default {
 };
 </script>
 
-<style lang="less">
-.form-dialog {
-    border: 1px solid #bbe0ff;
+<style lang="less" scope>
+.el-dialog {
+    border: 1px solid #b1cceb;
     color: rgb(95, 95, 95);
     background-color: white;
-    // width: 800px;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    top: 0; right: 0; left: 0; bottom: 0;
-
-    .title {
+    width: 750px;
+    @header-height: 50px;
+    .el-dialog__header{
+        box-sizing: border-box;
         background-color: #ecf5ff;
-        padding: 15px 20px;
-        border-bottom: 1px solid #bbe0ff;
+        // padding: 15px 20px;
+        border-bottom: 1px solid #b1cceb;
+        clear: both;
+        // height: @header-height;
+        .title {
+            background-color: #ecf5ff;
+            padding: auto 20px;
+            border-bottom: 1px solid #bbe0ff;
+            height: @header-height;
+            line-height: @header-height;
+        }
     }
+
 
     
 
     @line-height: 30px;
 
-    form {
-        border-bottom: 1px solid #bbe0ff;
-        padding: 10px 100px;
+    .el-dialog__body {
+        form {
+            padding: 80px 100px 60px;
 
-        .required .el-form-item__label::before {
-            display: inline-block;
-            content: "*";
-            line-height: @line-height;
-            height: @line-height;
-            color: red;
-        }
-
-        .text {
-            vertical-align: top;
-            text-align: right;
-            line-height: @line-height;
-        }
-
-        .input {
-            vertical-align: top;
-            text-align: left;
-
-            select,
-            input,
-            textarea {
-                width: 100%;
-                border: 1px solid #bbe0ff;
-            }
-
-            select:focus,
-            input:focus,
-            textarea:focus {
-                outline: 1px solid #bbe0ff;
-            }
-
-            select {
-                height: @line-height;
-            }
-
-            input {
+            .required .el-form-item__label::before {
+                display: inline-block;
+                content: "*";
                 line-height: @line-height;
                 height: @line-height;
+                color: red;
+            }
+            .el-form-item__content .el-input .el-input__inner{
+                border: 1px solid #d9eafd;
+                border-top:1px solid  #b9d0eb;
+            }
+            .el-form-item .el-textarea .el-textarea__inner {
+                border: 1px solid #d9eafd;
+                border-top:1px solid  #b9d0eb;
+            }
+            .text {
+                vertical-align: top;
+                text-align: right;
+                line-height: @line-height;
             }
 
-            textarea {
-                resize: none;
+            .input {
+                vertical-align: top;
+                text-align: left;
+
+                select,
+                input,
+                textarea {
+                    width: 100%;
+                    border: 1px solid #bbe0ff;
+                }
+
+                select:focus,
+                input:focus,
+                textarea:focus {
+                    outline: 1px solid #bbe0ff;
+                }
+
+                select {
+                    height: @line-height;
+                }
+
+                input {
+                    line-height: @line-height;
+                    height: @line-height;
+                }
+
+                textarea {
+                    resize: none;
+                }
             }
         }
     }
 
-    .footer {
-        overflow: hidden;
+    
+    .el-dialog__footer{
+        border: 1px solid #dddddd;
         background-color: #faf9fc;
-        padding: 10px 20px;
+        .footer {
+            overflow: hidden;
+            padding: 20px 50px;
 
-        .tip {
-            float: left;
-        }
-
-        .buttons {
-            float: right;
-
-            .save,
-            .cancel {
-                width: 50px;
-                height: 32px;
-                border: none;
+            .tip {
+                float: left;
             }
-
-            .save {
-                background-color: #326ab0;
-                color: white;
-                margin-right: 15px;
-            }
-
-            .cancel {
-                background-color: #dbdbdb;
+            .buttons{
+                
+                .save{
+                    background-color: #326ab0;
+                    border: none;
+                    color: #fff;
+                }
+                .save:hover{
+                    background-color: #6ca6e7;
+                }
+                .cancel {
+                    background-color: #ddd;
+                    border: none;
+                }
+                .cancel:hover{
+                    background-color: #bbb;
+                    color: #000;
+                }
             }
         }
     }

@@ -274,7 +274,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .assets-scrap-approval {
     >div>.data-list-operating {
         float: left;

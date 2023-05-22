@@ -103,7 +103,7 @@ export default {
 </script>
 
     
-<style lang="less">
+<style lang="less" scope>
 .personal-info {
     >.card {
         margin: 30px;

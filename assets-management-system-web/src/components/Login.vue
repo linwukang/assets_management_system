@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .login {
     width: 500px;
     background-color: white;

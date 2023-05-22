@@ -163,10 +163,11 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .home {
+    height: 100%;
     >.top-nav {
-        @height: 80px;
+        @height: 100px;
         height: @height;
 
         h1 {
@@ -181,6 +182,7 @@ export default {
 
     >.main {
         padding: 0 10px;
+ 
         display: flex;
         flex-direction: row;
         align-items: flex-start;

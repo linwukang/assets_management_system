@@ -206,7 +206,7 @@ export default {
 </script>
 
     
-<style lang="less">
+<style lang="less" scope>
 .details-view {
     @line-height: 30px;
     line-height: @line-height;

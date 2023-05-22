@@ -99,8 +99,14 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .functional-view {
-    
+    .data-list-operating {
+        overflow: hidden;
+    }
+    .data-list {
+        height: 500px;
+        overflow-y: scroll;
+    }
 }
 </style>
