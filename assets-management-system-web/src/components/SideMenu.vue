@@ -4,8 +4,7 @@
         class="el-menu-vertical-demo" 
         background-color="#ffffff" 
         text-color="#666666" 
-        active-text-col
-        or="#ffd04b">
+        active-text-color="#ffd04b">
         <el-menu-item 
             v-for="item in menuList" 
             @click="to(item)"
@@ -45,7 +44,7 @@ export default {
 
 <style lang="less" scope>
 .side-menu {
-    .el-menu-item, .is-active {
+    .el-menu-item.is-active {
         background-color: #ffffff;
         color: #666666;
     }
