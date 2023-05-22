@@ -138,6 +138,7 @@ export default {
                     this.formContent[i][j].fieldName
                     if (this.formContent[i][j].from && this.formContent[i][j].options.length == 0) {
                         let from = this.formContent[i][j].from
+                        console.log("from: ", from);
                         if (from.conditions) {
                             Service.conditionList(
                                 from.table, 

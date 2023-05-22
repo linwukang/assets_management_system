@@ -33,7 +33,9 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                title: (line.enabled) 
+                    ? "您正在禁用资产类别。禁用不影响历史数据，但禁用后该类别不能再被使用。您确认要禁用吗？"
+                    : "您正在启用资产类别。您确认要启用吗？",
             },
             click(ok) {
                 Service.updateById(
@@ -232,7 +234,9 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                title: (line.enabled) 
+                    ? "您正在禁用品牌。禁用不影响历史数据，但禁用后该品牌不能再被使用。您确认要禁用吗？"
+                    : "您正在启用品牌。您确认要启用吗？",
             },
             click(ok) {
                 Service.updateById(
@@ -303,7 +307,13 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                popconfirm: {
+                    confirm: (line.enabled) ? "禁用" : "启用",
+                    cancel: "取消",
+                    title: (line.enabled) 
+                        ? "您正在禁用设备用途。禁用不影响历史数据，但禁用后该取得方式不能再被使用。您确认要禁用吗？"
+                        : "您正在启用设备用途。您确认要启用吗？",
+                },
             },
             click(ok) {
                 // util.http.put(
@@ -356,7 +366,9 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                title: (line.enabled) 
+                    ? "您正在禁用取得方式。禁用不影响历史数据，但禁用后该取得方式不能再被使用。您确认要禁用吗？"
+                    : "您正在启用取得方式。您确认要启用吗？",
             },
             click(ok) {
                 Service.updateById(
@@ -384,18 +396,30 @@ export default {
     'personal-info': null, 
     // 人员管理
     'personnel': (line) => {
-        return {
-            edit: {
-                click: () => {
-                    router.push({
-                        path: `personnel/edit/${line.id}`
-                    })
-                 },
-            }, 
-            delete: {
-                click: function () { },
-            }
+        let edit = {
+            click: () => {
+                router.push({
+                    path: `personnel/edit/${line.id}`
+                })
+             },
         }
+        let deleteLine = {
+            popconfirm: {
+                confirm: "删除",
+                cancel: "取消",
+                title: "删除人员",
+            },
+            click: (ok) => { 
+                Service.deleteById(
+                    'personnel',
+                    line.id,
+                    ok)
+            },
+        }
+        if (line.category !== '离任')
+            return { edit, delete: deleteLine }
+        else
+            return {}
     },
     // 报废方式
     'scrap-mode': (line) => {
@@ -469,7 +493,9 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                title: (line.enabled) 
+                    ? "您正在禁用存放地点。禁用不影响历史数据，但禁用后该取得方式不能再被使用。您确认要禁用吗？"
+                    : "您正在启用存放地点。您确认要启用吗？",
             },
             click(ok) {
                 Service.updateById(
@@ -521,7 +547,9 @@ export default {
             popconfirm: {
                 confirm: (line.enabled) ? "禁用" : "启用",
                 cancel: "取消",
-                title: "修改",
+                title: (line.enabled) 
+                    ? "您正在禁用供应商。禁用不影响历史数据，但禁用后该取得方式不能再被使用。您确认要禁用吗？"
+                    : "您正在启用供应商。您确认要启用吗？",
             },
             click(ok) {
                 Service.updateById(

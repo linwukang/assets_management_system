@@ -12,7 +12,10 @@ export default {
                     label: 'name',
                     value: 'id',
                     conditions: [
-
+                        {
+                            operator: 'eq',
+                            values: ['state', '正常']
+                        }
                     ]
                 }
             },
@@ -90,6 +93,12 @@ export default {
                     table: 'assets-class',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -101,6 +110,12 @@ export default {
                     table: 'brand',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -133,6 +148,12 @@ export default {
                     table: 'supplier',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -144,6 +165,12 @@ export default {
                     table: 'gaining-method',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -155,6 +182,12 @@ export default {
                     table: 'storage-place',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
         ],
@@ -276,6 +309,12 @@ export default {
                     table: 'equipment-use',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -310,6 +349,12 @@ export default {
                     table: 'assets-class',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -369,6 +414,12 @@ export default {
                     table: 'scrap-mode',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -415,6 +466,12 @@ export default {
                     table: 'assets-class',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -426,6 +483,12 @@ export default {
                     table: 'brand',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -458,6 +521,12 @@ export default {
                     table: 'supplier',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -469,6 +538,12 @@ export default {
                     table: 'gaining-method',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
             {
@@ -480,6 +555,12 @@ export default {
                     table: 'storage-place',
                     label: 'name',
                     value: 'id',
+                    conditions: [
+                        {
+                            operator: 'eq',
+                            values: ['enabled', true]
+                        }
+                    ]
                 }
             },
         ],

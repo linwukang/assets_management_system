@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Code from "./data/Code"
+import Data from "./data/Data"
 
 // 获取所有数据
 let list = function (tableName, get, ok) {
@@ -42,25 +43,16 @@ let listByIdList = function (tableName, idList, get, ok) {
         })
 }
 
-// 获取所有符合筛选条件的数据数据
+// 获取所有符合筛选条件的数据
 let conditionList = function (tableName, conditions, get, ok) {
-    if (!ok) { ok = () => { } }
-
-    let url = tableName
-    Vue.prototype.$http
-        .get(url, { params: { conditions: conditions } })
-        .then((result) => {
-            if (result.data.code === Code.QUERY_ALL_OK) {
-                // 查询成功
-                get(result.data.data)
-                ok(true)
-            }
-            else {
-                ok(false, result.data.message)
-            }
-        }).catch((error) => {
-            ok(false, error)
-        })
+    let fieldNames = Object.keys(Data[tableName])
+    console.log("conditions", conditions);
+    joinList(
+        tableName, 
+        fieldNames,
+        conditions, 
+        get, 
+        ok)
 }
 
 // 获取表中数据的行数
