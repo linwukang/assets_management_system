@@ -35,7 +35,11 @@
                         multiple
                         style="width: 100%;"
                         v-else-if="item.upload">
-                        <img :src="dataContent[item.fieldName]" alt="" onerror="this.style.display='none'">
+                        <img 
+                            :src="dataContent[item.fieldName]" 
+                            alt="" 
+                            onerror="this.style.display='none'"
+                            v-if="dataContent[item.fieldName] !== '' && dataContent[item.fieldName] !== null && dataContent[item.fieldName] !== undefined">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     </el-upload>
