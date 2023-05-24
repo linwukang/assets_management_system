@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.sb2dim.assets_management_system.entity.auto_fill.annotation.Now;
 import com.sb2dim.assets_management_system.service.AssetsClassService;
 import com.sb2dim.assets_management_system.validation.constraints.Unique;
 import io.swagger.annotations.ApiModel;
@@ -61,5 +62,6 @@ public class AssetsClass implements Serializable {
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")
+    @Now
     private Date createTime;
 }

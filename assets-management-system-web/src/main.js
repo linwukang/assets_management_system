@@ -39,10 +39,10 @@ Vue.use(store)
 
 // 检查登录
 router.beforeEach((to, from, next) => {
-  if (window.localStorage.token /*&& window.localStorage.isLogin === "1"*/) {
+  if (localStorage.getItem('token') /*&& window.localStorage.isLogin === "1"*/) {
     next()
   } else if (to.path !== "/login") {
-    let token = window.localStorage.token
+    let token = localStorage.getItem('token')
     if (token === "null" || token === "" || token === undefined) {
       Vue.prototype.$message({
         message: "检测到您还未登录,请登录后操作！",
@@ -57,12 +57,12 @@ router.beforeEach((to, from, next) => {
 })
 
 // 添加缓存插件
-const cache = setupCache({
-  maxAge: 15 * 60 * 1000 // 缓存有效期为 15 分钟
-})
+// const cache = setupCache({
+//   maxAge: 15 * 60 * 1000 // 缓存有效期为 15 分钟
+// })
 
 const api = axios.create({
-  adapter: cache.adapter
+  // adapter: cache.adapter
 })
 
 // 配置公共url
@@ -70,8 +70,8 @@ api.defaults.baseURL = "/api"
 //添加请求拦截器
 api.interceptors.request.use(
   (config) => {
-    if (store.state.token) {
-      config.headers.common["token"] = store.state.token
+    if (localStorage.getItem('token')) {
+      config.headers.common["token"] = localStorage.getItem('token')
     }
     return config;
   },

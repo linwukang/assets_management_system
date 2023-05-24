@@ -18,6 +18,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registration.addPathPatterns("/**"); //所有路径都被拦截
         registration.excludePathPatterns(    //添加不拦截路径
                 "/login",                    //登录路径
+                "/user-info/identity",       //
                 "/**/*.html",                //html静态资源
                 "/**/*.js",                  //js静态资源
                 "/**/*.css"                  //css静态资源

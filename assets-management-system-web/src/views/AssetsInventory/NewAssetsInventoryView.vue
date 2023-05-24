@@ -3,10 +3,10 @@
 <div class="new-assets-inventory-view">
     <div class="top">
         <el-form :inline="true" ref="form" label-width="100px">
-            <el-form-item label="盘点单名称">
+            <el-form-item label="盘点单名称" :class="'required'">
                 <el-input v-model="name"></el-input>
             </el-form-item>
-            <el-form-item label="盘点单说明">
+            <el-form-item label="盘点单说明" :class="'required'">
                 <el-input v-model="description"></el-input>
             </el-form-item>
         </el-form>
@@ -17,7 +17,7 @@
     </div>
     <!-- 数据列表 -->
     <div class="data-list">
-        <table width="100%" cellspacing="0" class=".table">
+        <table width="100%" cellspacing="0" class="table">
             <tr>
                 <td :style="{ width: display.orderNumber.width / widthSum * 100 + '%' }">
                     <input type="checkbox" v-model="isSelectAll" />
@@ -51,11 +51,11 @@
                     <span class="null" v-else>---</span>
                 </td>
             </tr>
-            <div v-if="dataList.length == 0">没有数据</div>
+            <div v-if="dataList.length == 0" class="table-mysj">没有数据</div>
         </table>
     </div>
 
-    <div class=".bottom">
+    <div class="bottom">
         <el-button @click="save()">保存</el-button>
         <el-button @click="cancel()">取消</el-button>
     </div>
@@ -277,4 +277,38 @@ export default {
 
     
 <style lang="less" scope>
+    .new-assets-inventory-view .el-form {
+        background-color: #fff1e3;
+        border-bottom:2px solid #d0b58f ;
+        height:70px ;
+        .el-form-item{
+            padding-top: 15px;
+            padding-left: 5%;
+        }
+        @line-height: 30px;
+        .required .el-form-item__label::before {
+            display: inline-block;
+            content: "*";
+            line-height: @line-height;
+            height: @line-height;
+            color: red;
+        }
+    }
+    .new-assets-inventory-view .right{
+        margin: 10px 0;
+        .el-button{
+            float: right;
+        }
+    }
+    .new-assets-inventory-view .data-list{
+        margin: 10px 0;
+        padding: 10px 0;
+        border-bottom: 2px solid #ddd;
+        .table .table-mysj{
+            margin-top: 10px;
+        }
+    }
+    .new-assets-inventory-view .bottom{
+        margin-left: 40%;
+    }
 </style>

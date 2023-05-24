@@ -1,7 +1,13 @@
 <template>
-<div class="home">
+<div class="home-view">
     <div class="top-nav">
         <h1>功能测试资产管理系统</h1>
+        <div class="top-nav-right">
+            <router-link :to="'/' + $route.params.identity + '/home/my'">
+                {{ userName + '(' + identityName +  ')' }}
+            </router-link>
+            <router-link @click="logout" to="/login">退出</router-link>
+        </div>
     </div>
     <div class="main">
         <div class="left">
@@ -11,6 +17,11 @@
             <LocationNav class="location-nav"></LocationNav>
             <div class="content">
                 <router-view :key="$route.fullPath"></router-view>
+                <div v-if="$route.fullPath.indexOf('/home/') == -1">
+                    <Welcome 
+                        :username="userName"
+                        :identity="identityName"/>
+                </div>
             </div>
         </div>
     </div>
@@ -20,11 +31,16 @@
 <script>
 import SideMenu from '../components/SideMenu.vue'
 import LocationNav from '../components/LocationNav.vue'
+import Welcome from '../components/Welcome.vue'
 import { EventBus } from '../main';
+import store from "../store/store"
+import Service from '../Service';
 export default {
     data() {
         let basePath = "/" + this.$route.params.identity + "/home"
         return {
+            userName: '',
+            identity: '',
             menu_list: [],
             menu: {
                 'system-administrator': [
@@ -152,19 +168,55 @@ export default {
         this.menu_list = this.menu[this.$route.params.identity]
     },
     updated() {
-
+        Service.getPersonalInfo(data => {
+            this.userName = data.account
+        })
+        Service.getIdentity(
+            (identity) => {
+                console.log("identity", identity)
+                switch (identity) {
+                    case 'assets_leader':
+                        this.identity = 'assets-leader'
+                        break
+                    case 'assets_manager':
+                        this.identity = 'assets-manager'
+                        break
+                    case 'system_administrator':
+                        this.identity = 'system-administrator'
+                        break
+                    default:
+                        break
+                }
+            }
+        )
     },
-    computed: {},
+    methods: {
+        logout() {
+            localStorage.setItem('token', '')
+        },
+        
+    },
+    computed: {
+        identityName() {
+            switch (this.$route.params.identity) {
+                case 'system-administrator': return '系统管理员'
+                case 'assets-manager': return '资产管理员'
+                case 'assets-leader': return '资产领导'
+                default: return '未登录'
+            }
+        },
+    },
     props: ["menuList"],
     components: {
         SideMenu,
-        LocationNav
+        LocationNav,
+        Welcome
     },
 };
 </script>
 
 <style lang="less" scope>
-.home {
+.home-view {
     height: 100%;
     >.top-nav {
         @height: 100px;
@@ -178,10 +230,24 @@ export default {
             line-height: @height;
             float: left;
         }
+
+        >.top-nav-right {
+            float: right;
+            margin-top: 50px;
+            a {
+                display: block;
+                float: left;
+                margin-right: 20px;
+                color: aliceblue;
+                text-decoration: none;
+                text-shadow: 1px 1px #bbb;
+            }
+        }
     }
 
     >.main {
         padding: 0 10px;
+        min-height: 800px;
  
         display: flex;
         flex-direction: row;

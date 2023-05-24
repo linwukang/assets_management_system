@@ -41,6 +41,7 @@ public class LoginController {
             tokenService.AddLoginToken(token, username, new Date(new Date().getTime() + 12 * 60 * 60 * 1000));
 
             PersonalInfo personalInfo = personalInfoService.getById(username);
+            System.out.println("Login: " + personalInfo);
             if (personalInfo != null) {
                 // 登录次数加一
                 personalInfo.setLoginTimes(personalInfo.getLoginTimes() + 1);
@@ -69,6 +70,7 @@ public class LoginController {
             if (userInfo != null) {
                 PersonalInfo personalInfo = personalInfoService.getById(userInfo.getUsername());
                 if (personalInfo != null) {
+                    System.out.println("get personal-info: " + personalInfo);
                     return new ResponseResult(
                             personalInfo,
                             Code.QUERY_OK
@@ -85,16 +87,15 @@ public class LoginController {
 
     @GetMapping("/user-info/identity")
     public ResponseResult identity(@RequestHeader("token") String token) {
-        System.out.println("identity");
+        System.out.println("token " + token);
         if (token != null) {
             UserInfo userInfo = tokenService.CheckLoginToken(token);
-            System.out.println(userInfo);
+            System.out.println("userInfo " + userInfo);
             if (userInfo != null) {
                 return new ResponseResult(
                         userInfo.getIdentity(),
                         Code.QUERY_OK
                 );
-
             }
         }
         return new ResponseResult(

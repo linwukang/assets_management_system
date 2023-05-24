@@ -19,12 +19,11 @@ export default {
 </script>
 
 <style lang="less" scope>
-   #app{
-        height: 968px;
-        background-image: url("../assets/图层.jpg");
-        background-repeat: no-repeat;
-        // background-size:1100px 100% ;
-        background-size: 100%;
-        background-color: #417bba;
+.user-login-view {
+    display: block;
+    .login {
+        float: right;
+        margin: 100px 180px;
     }
+}
 </style>

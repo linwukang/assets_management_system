@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Code from "./data/Code"
 import Data from "./data/Data"
+import store from "./store/store"
 
 // 获取所有数据
 let list = function (tableName, get, ok) {
@@ -371,6 +372,7 @@ let login = function (username, password, ok) {
             if (response.data.code === Code.LOGIN_SUCCEED) {
                 // 将 token 保存到本地
                 localStorage.setItem('token', response.data.data)
+                // store.state.token = response.data.data
                 ok(true)
                 
             }

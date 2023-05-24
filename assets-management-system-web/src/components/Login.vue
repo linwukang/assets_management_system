@@ -29,6 +29,9 @@ export default {
     methods: {
         login() {
             console.log("login");
+            if (!this.check()) {
+                return
+            }
             Service.login(
                 this.username, 
                 this.password, 
@@ -37,6 +40,7 @@ export default {
                         this.tip('登陆成功', 'success')
                         Service.getIdentity(
                             (identity) => {
+                                console.log("identity", identity);
                                 switch (identity) {
                                     case 'assets_leader':
                                         this.$router.push('/assets-leader/home')
@@ -59,6 +63,21 @@ export default {
                         this.tip(message, 'error')
                     }
                 })
+        },
+        check() {
+            if (this.username === undefined 
+                || this.username === null
+                || this.username === '') {
+                this.tip('请输入用户名', 'error')
+                return false
+            }
+            if (this.password === undefined 
+                || this.password === null
+                || this.password === '') {
+                this.tip('请输入密码', 'error')
+                return false
+            }
+            return true
         },
         tip(message, type) {
             this.$message({

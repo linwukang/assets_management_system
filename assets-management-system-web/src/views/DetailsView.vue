@@ -3,8 +3,10 @@
 <div class="details-view">
     <div v-for="block in form" class="form-block">
         <h2 class="title">
-            <font-awesome-icon :icon="block.icon" />
-            {{ block.title }}
+            <span class="title-text">
+                <font-awesome-icon :icon="block.icon" />
+                {{ block.title }}
+            </span>
         </h2>
         <div class="form-block-content" v-for="unit, key in block.form" :class="key">
             <el-form v-for="item in unit" class="form-line">
@@ -215,6 +217,12 @@ export default {
             display: block;
             clear: both;
             margin: 10px 10px;
+            padding: 0 0 10px 0;
+            border-bottom: 2px solid #dcdcdc;
+            .title-text{
+                padding: 0 0 9px 0;
+                border-bottom:3px solid #d0b58f ;
+            }
         }
         .left, .right {
             float: left;
@@ -233,7 +241,7 @@ export default {
                     min-width: 100px;
                     text-align: right;
                     margin-right: 20px;
-                    color: #515050;
+                    color: #a3a0a0;
                 }
                 >.required::before {
                     display: inline-block;

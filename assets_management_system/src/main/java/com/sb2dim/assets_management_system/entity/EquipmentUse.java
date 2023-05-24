@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.sb2dim.assets_management_system.entity.auto_fill.annotation.Now;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
@@ -62,5 +64,6 @@ public class EquipmentUse implements Serializable {
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")
+    @Now
     private Date createTime;
 }

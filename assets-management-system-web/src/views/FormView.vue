@@ -245,7 +245,11 @@ export default {
         height: @line-height;
         color: red;
     }
-
+    .left .required .el-input .el-input__inner{
+        border: 1px solid #c4dbf7;
+        border-top:#95bdec 1px solid;
+        border-right:#95bdec 1px solid;
+    }
     .left, .right {
         float: left;
         // overflow: hidden;
@@ -257,6 +261,7 @@ export default {
             height: 100%;
         }
     }
+  
     .left::after, .right::after {
         content: "";
         display: table;
@@ -275,14 +280,21 @@ export default {
 
     .footer {
         overflow: hidden;
-        padding: 10px 20px;
+        padding: 10px 235px;
         .save {
             background-color: #326ab0;
             color: white;
             margin-right: 15px;
         }
+        .save:hover{
+            background-color: #62a5f1;
+        }
         .cancel {
             background-color: #dbdbdb;
+        }
+        .cancel:hover{
+            color:#fff;
+            background-color: #bdbdbd;
         }
     }
 }

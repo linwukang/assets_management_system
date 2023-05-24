@@ -101,6 +101,7 @@ export default {
 
 <style lang="less" scope>
 .functional-view {
+    padding: 0 30px;
     .data-list-operating {
         overflow: hidden;
     }

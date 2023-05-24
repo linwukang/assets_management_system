@@ -109,14 +109,14 @@ export default {
     margin: 0;
     padding: 0;
 }
-
-#app {
-    background-color: beige;
-    height: 100%;
-    // h1 {
-    //     line-height: 50px;
-    //     font-size: 20px;
-    //     color: rgb(148, 106, 106);
-    // }
+html {
+    background-image: url("./assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    #app {
+        .home-view {
+        }
+    }
 }
+
 </style>
