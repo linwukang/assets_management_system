@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80027
 File Encoding         : 65001
 
-Date: 2023-05-13 17:08:33
+Date: 2023-05-26 12:03:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `assets_class` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资产类别编号',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资产类别名称',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COMMENT='资产类别';
@@ -127,13 +127,14 @@ CREATE TABLE `assets_inventory` (
   `end_date` date DEFAULT NULL COMMENT '结束日期',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 COMMENT='资产盘点';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COMMENT='资产盘点';
 
 -- ----------------------------
 -- Records of assets_inventory
 -- ----------------------------
 INSERT INTO `assets_inventory` VALUES ('11', 'PD20230511123859', '多挖点', '的撒大', 'finished', '2023-05-13', '2023-05-13', '2023-05-11 12:38:59');
 INSERT INTO `assets_inventory` VALUES ('12', 'PD20230512212910', '盘点盘点', '无聊', 'in_progress', null, null, '2023-05-12 21:29:10');
+INSERT INTO `assets_inventory` VALUES ('13', 'PD20230516215854', '见到啊', '的撒大啊', 'finished', '2023-05-16', '2023-05-16', '2023-05-16 21:58:54');
 
 -- ----------------------------
 -- Table structure for assets_inventory_sheet
@@ -149,7 +150,7 @@ CREATE TABLE `assets_inventory_sheet` (
   PRIMARY KEY (`id`),
   KEY `assets_inventory_sheet_ibfk_1` (`assets_inventory_id`),
   KEY `assets_inventory_sheet_ibfk_2` (`asset_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3 COMMENT='资产盘点单';
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb3 COMMENT='资产盘点单';
 
 -- ----------------------------
 -- Records of assets_inventory_sheet
@@ -173,6 +174,23 @@ INSERT INTO `assets_inventory_sheet` VALUES ('30', '12', '14', '正常', '1', nu
 INSERT INTO `assets_inventory_sheet` VALUES ('31', '12', '15', '正常', '1', null);
 INSERT INTO `assets_inventory_sheet` VALUES ('32', '12', '16', '正常', '1', null);
 INSERT INTO `assets_inventory_sheet` VALUES ('33', '12', '17', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('34', '13', '1', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('35', '13', '2', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('36', '13', '3', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('37', '13', '4', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('38', '13', '5', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('39', '13', '6', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('40', '13', '7', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('41', '13', '8', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('42', '13', '9', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('43', '13', '10', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('44', '13', '11', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('45', '13', '12', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('46', '13', '13', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('47', '13', '14', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('48', '13', '15', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('49', '13', '16', '正常', '1', null);
+INSERT INTO `assets_inventory_sheet` VALUES ('50', '13', '17', '异常', '1', '撒旦撒旦撒');
 
 -- ----------------------------
 -- Table structure for assets_maintain
@@ -216,19 +234,20 @@ CREATE TABLE `assets_purchase_requisition` (
   `suggest` varchar(255) DEFAULT NULL COMMENT '申购建议',
   `purchase_requisition_date` date NOT NULL COMMENT '申购日期',
   `reason` varchar(255) NOT NULL COMMENT '申购理由',
-  `application_status` enum('unread','approved','not_approved') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申请状态',
+  `application_status` enum('uncommitted','committed','approved','not_approved') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'uncommitted' COMMENT '申请状态',
   `not_approving_reasons` varchar(64) DEFAULT NULL COMMENT '审核不通过原因',
   PRIMARY KEY (`id`),
   KEY `asset_class_id` (`asset_class_id`),
   KEY `proposer_id` (`proposer_id`),
   KEY `equipment_use_id` (`equipment_use_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COMMENT='资产申购';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COMMENT='资产申购';
 
 -- ----------------------------
 -- Records of assets_purchase_requisition
 -- ----------------------------
-INSERT INTO `assets_purchase_requisition` VALUES ('1', 'SG20230321000001', '华为手机', '3', '1', '10', '60', '1', '', '', '2023-03-21', '焯！', 'unread', '');
-INSERT INTO `assets_purchase_requisition` VALUES ('2', 'SG20230321000002', '苹果电脑', '2', '2', '1', '100000', '2', '', '', '2022-11-30', '无', 'not_approved', '太贵了');
+INSERT INTO `assets_purchase_requisition` VALUES ('1', 'SG20230321000001', '华为手机', '3', '1', '10', '60', '1', '\\src\\assets\\user\\images\\OIP.jpg', '', '2023-03-21', '焯！', 'not_approved', '撒旦');
+INSERT INTO `assets_purchase_requisition` VALUES ('2', 'SG20230321000002', '苹果电脑', '2', '2', '1', '100000', '2', '\\src\\assets\\user\\images\\86559025_p0_master1200.jpg', '', '2022-11-30', '无', 'not_approved', '太贵了');
+INSERT INTO `assets_purchase_requisition` VALUES ('3', 'SG20230514145020', 'sadasda', '2', '3', '1', null, '2', '\\src\\assets\\user\\images\\thumb-1920-908560.jpg', null, '2023-05-07', 'esafad', 'not_approved', '傻逼');
 
 -- ----------------------------
 -- Table structure for assets_scrap
@@ -242,17 +261,18 @@ CREATE TABLE `assets_scrap` (
   `scrap_mode_id` int NOT NULL COMMENT '报废方式id',
   `scrap_date` date NOT NULL COMMENT '报废日期',
   `scrap_reason` varchar(255) NOT NULL COMMENT '报废原因',
-  `application_status` enum('unread','approved','not_approved') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申请状态',
+  `application_status` enum('uncommitted','committed','approved','not_approved') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'uncommitted' COMMENT '申请状态',
   `not_approving_reasons` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '审核不通过原因',
   PRIMARY KEY (`id`),
   KEY `proposer_id` (`proposer_id`) USING BTREE,
   KEY `scrap_method_id` (`scrap_mode_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='资产报废';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COMMENT='资产报废';
 
 -- ----------------------------
 -- Records of assets_scrap
 -- ----------------------------
-INSERT INTO `assets_scrap` VALUES ('1', '5', 'BF20230101123123', '1', '1', '2023-05-10', '不知道', 'approved', '');
+INSERT INTO `assets_scrap` VALUES ('1', '5', 'BF20230101123123', '1', '1', '2023-05-10', '不知道', 'uncommitted', '');
+INSERT INTO `assets_scrap` VALUES ('2', '3', 'BF20230121123123', '9', '3', '2023-05-05', '爆炸了', 'approved', '');
 
 -- ----------------------------
 -- Table structure for assets_storage
@@ -283,9 +303,9 @@ CREATE TABLE `assets_storage` (
 -- ----------------------------
 INSERT INTO `assets_storage` VALUES ('1', 'ZC0001', '投影仪', '1', '4', '5', '1', '2020-01-22 00:00:00', '1', '正常', '');
 INSERT INTO `assets_storage` VALUES ('2', 'ZC0002', '签字笔', '2', '3', '2', '2', '2014-07-01 00:00:00', '3', '正常', '');
-INSERT INTO `assets_storage` VALUES ('3', 'ZC0003', '笔记本', '2', '4', '1', '3', '2011-09-05 00:00:00', '5', '正常', '');
+INSERT INTO `assets_storage` VALUES ('3', 'ZC0003', '笔记本', '2', '4', '1', '3', '2011-09-05 00:00:00', '5', '报废', '');
 INSERT INTO `assets_storage` VALUES ('4', 'ZC0004', '华为手机', '3', '4', '4', '2', '2018-03-11 00:00:00', '3', '正常', '');
-INSERT INTO `assets_storage` VALUES ('5', 'ZC0005', '手机S820', '3', '3', '1', '3', '2015-06-30 00:00:00', '4', '报废', '');
+INSERT INTO `assets_storage` VALUES ('5', 'ZC0005', '手机S820', '3', '3', '1', '3', '2015-06-30 00:00:00', '4', '正常', '');
 INSERT INTO `assets_storage` VALUES ('6', 'ZC0006', '椅子', '2', '2', '2', '1', '2023-02-24 00:00:00', '2', '正常', '');
 INSERT INTO `assets_storage` VALUES ('7', 'ZC0007', '桌子', '1', '3', '3', '1', '2011-02-10 00:00:00', '1', '正常', '');
 INSERT INTO `assets_storage` VALUES ('8', 'ZC0008', '保温杯', '1', '2', '3', '3', '2016-12-25 00:00:00', '3', '正常', '');
@@ -328,7 +348,7 @@ CREATE TABLE `brand` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '品牌名称',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '品牌说明',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COMMENT='品牌';
@@ -336,9 +356,9 @@ CREATE TABLE `brand` (
 -- ----------------------------
 -- Records of brand
 -- ----------------------------
-INSERT INTO `brand` VALUES ('1', '晨光品牌', '晨光', '0', '2023-03-21 13:11:37');
-INSERT INTO `brand` VALUES ('2', '戴尔品牌', '戴尔', '0', '2023-03-21 13:12:12');
-INSERT INTO `brand` VALUES ('3', '格力品牌', '格力', '0', '2023-03-21 13:12:50');
+INSERT INTO `brand` VALUES ('1', '晨光品牌', '晨光', '1', '2023-03-21 13:11:37');
+INSERT INTO `brand` VALUES ('2', '戴尔品牌', '戴尔', '1', '2023-03-21 13:12:12');
+INSERT INTO `brand` VALUES ('3', '格力品牌', '格力', '1', '2023-03-21 13:12:50');
 INSERT INTO `brand` VALUES ('4', '光明品牌', '光明', '1', '2023-03-21 13:13:10');
 INSERT INTO `brand` VALUES ('5', '联想品牌', '联想', '1', '2023-03-21 13:13:27');
 
@@ -378,7 +398,7 @@ CREATE TABLE `equipment_use` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备用途编号',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备用途名称',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -400,7 +420,7 @@ CREATE TABLE `gaining_method` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '获取方式编号',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '获取方式名称',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `id` (`code`)
@@ -429,9 +449,9 @@ CREATE TABLE `personal_info` (
 -- ----------------------------
 -- Records of personal_info
 -- ----------------------------
-INSERT INTO `personal_info` VALUES ('leader', '114514', '2023-05-10 10:47:56', '100');
-INSERT INTO `personal_info` VALUES ('manager', '114514', '2023-05-13 17:07:01', '29');
-INSERT INTO `personal_info` VALUES ('sys_admin', '114514', '2023-05-01 10:48:03', '510');
+INSERT INTO `personal_info` VALUES ('leader', '114514', '2023-05-24 19:12:56', '108');
+INSERT INTO `personal_info` VALUES ('manager', '114514', '2023-05-24 19:13:00', '68');
+INSERT INTO `personal_info` VALUES ('sys_admin', '114514', '2023-05-24 19:13:04', '543');
 
 -- ----------------------------
 -- Table structure for personnel
@@ -455,19 +475,19 @@ CREATE TABLE `personnel` (
 -- ----------------------------
 INSERT INTO `personnel` VALUES ('1', '1001', '李文涛', '1', '在编', '男', '2000-02-17', '');
 INSERT INTO `personnel` VALUES ('2', '1002', '庄严', '5', '合同', '女', '2003-06-10', '');
-INSERT INTO `personnel` VALUES ('3', '1003', '王铭章', '3', '临时', '武装直升机', '1999-10-05', '');
-INSERT INTO `personnel` VALUES ('4', '1004', '李云飞', '3', '在编', '顺性别女', '2015-03-31', '');
-INSERT INTO `personnel` VALUES ('5', '1005', '谢佳琳', '5', '合同', '跨性别女性', '1968-06-25', '');
+INSERT INTO `personnel` VALUES ('3', '1003', '王铭章', '3', '离任', '武装直升机', '1999-10-05', '');
+INSERT INTO `personnel` VALUES ('4', '1004', '李云飞', '3', '离任', '顺性别女', '2015-03-31', '');
+INSERT INTO `personnel` VALUES ('5', '1005', '谢佳琳', '5', '离任', '跨性别女性', '1968-06-25', '');
 INSERT INTO `personnel` VALUES ('6', '1006', '刘鸿博', '5', '临时', '男', '1987-02-06', '');
-INSERT INTO `personnel` VALUES ('7', '1007', '曾健民', '4', '在编', '女', '1967-07-12', '');
-INSERT INTO `personnel` VALUES ('8', '1008', '杨志新', '5', '在编', '女', '1965-10-28', '');
+INSERT INTO `personnel` VALUES ('7', '1007', '曾健民', '4', '离任', '女', '1967-07-12', '');
+INSERT INTO `personnel` VALUES ('8', '1008', '杨志新', '5', '离任', '女', '1965-10-28', '');
 INSERT INTO `personnel` VALUES ('9', '1009', '黄天佑', '2', '在编', '双性人', '1999-05-06', '');
-INSERT INTO `personnel` VALUES ('10', '1010', '刘华洋', '5', '临时', '女', '2013-09-12', '');
-INSERT INTO `personnel` VALUES ('11', '1011', '蒋婉儿', '1', '在编', '非二元性别', '1972-07-23', '');
-INSERT INTO `personnel` VALUES ('12', '1012', '江欣怡', '1', '合同', '女', '1966-02-22', '');
-INSERT INTO `personnel` VALUES ('13', '1013', '邹敬一', '4', '在编', '女', '1959-07-20', '');
-INSERT INTO `personnel` VALUES ('14', '1014', '向菲菲', '4', '临时', '女', '2007-10-11', '');
-INSERT INTO `personnel` VALUES ('15', '1015', '陈涛涛', '4', '临时', '跨性别女性', '2017-01-07', '');
+INSERT INTO `personnel` VALUES ('10', '1010', '刘华洋', '5', '离任', '女', '2013-09-12', '');
+INSERT INTO `personnel` VALUES ('11', '1011', '蒋婉儿', '1', '离任', '非二元性别', '1972-07-23', '');
+INSERT INTO `personnel` VALUES ('12', '1012', '江欣怡', '1', '离任', '女', '1966-02-22', '');
+INSERT INTO `personnel` VALUES ('13', '1013', '邹敬一', '4', '离任', '女', '1959-07-20', '');
+INSERT INTO `personnel` VALUES ('14', '1014', '向菲菲', '4', '离任', '女', '2007-10-11', '');
+INSERT INTO `personnel` VALUES ('15', '1015', '陈涛涛', '4', '离任', '跨性别女性', '2017-01-07', '');
 INSERT INTO `personnel` VALUES ('16', '1016', '郭晨光', '4', '在编', '女', '1980-07-08', '');
 INSERT INTO `personnel` VALUES ('17', '1017', '鲁志刚', '4', '在编', '女', '1964-08-15', '');
 INSERT INTO `personnel` VALUES ('18', '1018', '陈嘉仪', '4', '合同', '女', '1964-01-17', '');
@@ -506,11 +526,11 @@ CREATE TABLE `scrap_mode` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '报废方式编号',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '报废方式名称',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' DEFAULT '1' COMMENT '是否已启用',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COMMENT='报废方式';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COMMENT='报废方式';
 
 -- ----------------------------
 -- Records of scrap_mode
@@ -519,6 +539,7 @@ INSERT INTO `scrap_mode` VALUES ('1', 'BFFS0001', '变卖', '1', null, '2023-03-
 INSERT INTO `scrap_mode` VALUES ('2', 'BFFS0002', '丢失', '1', '设备丢失', '2023-03-21 13:28:59');
 INSERT INTO `scrap_mode` VALUES ('3', 'BFFS0003', '捐赠', '1', null, '2023-03-21 13:29:22');
 INSERT INTO `scrap_mode` VALUES ('4', 'BFFS0004', '其他', '1', '其他', '2023-03-21 13:29:35');
+INSERT INTO `scrap_mode` VALUES ('5', '11110000', 'asd', '1', 'asd', '2023-05-24 17:29:19');
 
 -- ----------------------------
 -- Table structure for storage_place
@@ -527,7 +548,7 @@ DROP TABLE IF EXISTS `storage_place`;
 CREATE TABLE `storage_place` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '存放地点名称',
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
@@ -538,9 +559,9 @@ CREATE TABLE `storage_place` (
 -- ----------------------------
 INSERT INTO `storage_place` VALUES ('1', '1号楼1号仓库', '1', '2023-03-21 13:25:10', null);
 INSERT INTO `storage_place` VALUES ('2', '2号仓库', '1', '2023-03-21 13:25:31', null);
-INSERT INTO `storage_place` VALUES ('3', '厂库', '0', '2023-03-21 13:25:42', null);
+INSERT INTO `storage_place` VALUES ('3', '厂库', '1', '2023-03-21 13:25:42', null);
 INSERT INTO `storage_place` VALUES ('4', '行政办公室', '0', '2023-03-21 13:26:00', '存放移动设备');
-INSERT INTO `storage_place` VALUES ('5', '厕所', '1', '2023-03-21 16:33:51', '存放食物');
+INSERT INTO `storage_place` VALUES ('5', '厕所', '0', '2023-03-21 16:33:51', '存放食物');
 
 -- ----------------------------
 -- Table structure for supplier
@@ -550,7 +571,7 @@ CREATE TABLE `supplier` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
   `type` enum('生产商','零售商','代理商','其他') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `enabled` tinyint(1) NOT NULL COMMENT '是否已启用',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否已启用',
   `contact_person` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系人',
   `contact_tel` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '移动电话',
   `address` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -614,7 +635,7 @@ CREATE TRIGGER `scrap_approved` AFTER UPDATE ON `assets_scrap` FOR EACH ROW BEGI
     UPDATE assets_storage SET state='报废' 
         WHERE id=new.asset_id AND new.application_status='approved';
     UPDATE assets_storage SET state='正常' 
-        WHERE id=new.asset_id AND (new.application_status='unread' OR new.application_status='not_approved');
+        WHERE id=new.asset_id AND NOT (new.application_status='approved');
 END
 ;;
 DELIMITER ;
