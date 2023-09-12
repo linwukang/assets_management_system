@@ -460,7 +460,26 @@ export default {
         padding: 10px 50px;
         >.left>div>.label, >.right>div>.label {
             color: rgb(95, 95, 95);
+            margin-right: 50px;
         }
+
+        >.left>div>.text, >.right>div>.text {
+            float: right;
+        }
+
+        >.left, >.right {
+            margin-right: 30px;
+            padding-right: 270px;
+        }
+
+        >.left {
+            float: left;
+        }
+
+        >.right {
+            float: left;
+        }
+        overflow: hidden;
     }
 }
 </style>

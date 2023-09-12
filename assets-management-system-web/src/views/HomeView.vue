@@ -248,6 +248,7 @@ export default {
     >.main {
         padding: 0 10px;
         min-height: 800px;
+        overflow: scroll;
  
         display: flex;
         flex-direction: row;
